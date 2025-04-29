@@ -1,0 +1,241 @@
+Season,Date,site,banding_nest_no.,zoo_aviary_id,life_stage,Band_Number,Current_band,Bands_at_banding,Sex_given,Sexing_method,sex_questioned,sex_verified,Infertile,Weight_g,Head_Bill_Length,Bill,Tarsus,Tarsus_width_plane_of_body,Wing_Length,blood_taken,moult_scored,fat,lice,faecal_sample,photo,new_bands_applied,age_at_banding_days,Colour_band_type,Colour_band_depth_over_metal_band,Colour_bands_fused_with_THF,bander,comments
+1990/1991,20/01/1991,NA,NA,NA,chick,C43701,W-M,W-M,female,copulation,NA,female,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,21,NA,NA,no,NA,NA
+1991/1992,7/01/1992,NA,NA,NA,chick,C43757,G-M,G-M,female,DNA,NA,female,NA,65.5,55.6,21.1,17,NA,131,NA,NA,NA,NA,NA,NA,1,23,NA,NA,no,NA,NA
+1991/1992,11/01/1992,NA,NA,NA,juvenile,C43758,M-W,M-W,female,DNA,NA,female,NA,68.5,51.8,19.9,16.8,NA,115,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1991/1992,11/01/1992,NA,NA,NA,chick,C43759,M-Y,M-Y,female,Unknown,NA,female,NA,58.5,49.4,18,16,NA,100,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1991/1992,11/01/1992,NA,NA,NA,chick,C43760,M-R,M-R,female,DNA,NA,female,NA,60.5,52.5,20.6,16.5,NA,128,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1992/1993,7/02/1993,NA,NA,NA,chick,C42540,BW-M,BW-M,female,Unknown,NA,female,NA,58,48.2,18.5,18.5,NA,104,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1992/1993,7/02/1993,NA,NA,NA,chick,C42541,WpG-M,WpG-M,female,Unknown,NA,female,NA,52,48.9,18.7,17.5,NA,110,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1993/1994,29/12/1993,NA,NA,NA,chick,C43768,Y-M,Y-M,female,Unknown,NA,female,NA,59,50.1,18.3,16.3,NA,104,NA,NA,NA,NA,NA,NA,1,20,NA,NA,no and very pail,NA,NA
+1997/1998,15/01/1998,NA,NA,NA,chick,C43874,RY-M,RY-M,female,Unknown,NA,female,NA,54,46.8,16.9,19,NA,89,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+1997/1998,14/01/1998,NA,NA,NA,chick,C43876,RpG-M,RpG-M,female,behaviour,NA,female,NA,60.5,51.8,18.8,19.4,NA,118,NA,NA,NA,NA,NA,NA,1,20,NA,NA,no,NA,NA
+1998/1999,27/01/1999,zoo,papakanui,NA,juvenile,C44002,WY-M,WY-M,unknown,Unknown,NA,female,NA,66,59.95,NA,14.33,NA,191,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1998/1999,22/01/1999,NA,NA,NA,chick,C44009,M-WB,M-WB,female,DNA,NA,female,NA,56.6,48.4,17.6,18,NA,89,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+1998/1999,22/01/1999,NA,NA,NA,chick,C44011,pG-M,pGW-M,female,DNA,male,female,NA,63.8,52.6,19.3,18.6,NA,111,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,NA,NA
+1998/1999,25/01/1999,NA,NA,NA,chick,C44012,M-BW,M-BW,female,DNA,NA,female,NA,59,49.3,17.5,NA,NA,100,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,NA,NA
+1999/2000,30/12/1999,NA,NA,NA,chick,C28703,M-WR,M-WR,female,Unknown,NA,female,NA,60,45.2,NA,19.7,NA,NA,NA,NA,NA,NA,NA,NA,1,16,NA,NA,Tetrahydrofuran,NA,NA
+1999/2000,30/12/1999,NA,NA,NA,chick,C28704,M-WY,M-WY,female,Unknown,NA,female,NA,62.25,46.5,NA,20,NA,NA,NA,NA,NA,NA,NA,NA,1,16,NA,NA,no,NA,NA
+1999/2000,29/01/2000,NA,NA,NA,chick,C28712,M-WpG,M-WpG,female,Unknown,NA,female,NA,61,51.2,18.6,NA,NA,116,NA,NA,NA,NA,NA,NA,1,20,NA,NA,no,NA,NA
+1999/2000,12/02/2000,NA,NA,NA,chick,C28714,M-YpG,M-YpG,female,Unknown,NA,female,NA,62.5,51.7,19.3,NA,NA,108,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1999/2000,4/12/1999,NA,NA,NA,chick,C43785,pGB-M,pGB-M,female,behaviour,yes,female,NA,54,45.8,14.5,17.5,NA,73,NA,NA,NA,NA,NA,NA,1,16,NA,NA,no,NA,NA
+1999/2000,4/12/1999,NA,NA,NA,chick,C43984,M-RW,M-RW,female,Unknown,NA,female,NA,59,47.5,15.7,18.6,NA,81.5,NA,NA,NA,NA,NA,NA,1,15,NA,NA,no,NA,NA
+2000/2001,31/12/2000,NA,NA,NA,chick,C41553,M-nil,M-YB,female,DNA?,yes in nest database as both,female,NA,57.5,49.63,18,19.86,NA,100,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+2001/2002,27/11/2001,NA,NA,NA,chick,C41563,M-BY,M-BY,female,DNA,NA,female,NA,27.5,47.92,17.05,19.57,NA,105,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+2001/2002,29/12/2001,NA,NA,NA,chick,C41566,M-nil,M-BpG,female,DNA,NA,female,NA,62,47.35,17.5,17.35,NA,98,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+2001/2002,30/12/2001,NA,NA,NA,chick,C41567,M-pG,M-pGR,female,behaviour,female,female,problem genetics,51,47.3,16.6,18.6,NA,80,NA,NA,NA,NA,NA,NA,1,15,NA,NA,no,NA,NA
+2001/2002,30/12/2001,NA,NA,NA,chick,C41568,B-WM,B-WM,unknown,DNA?,NA,female,NA,57,48.64,17.19,19.49,NA,90,NA,NA,NA,NA,NA,NA,1,16,NA,NA,no,NA,NA
+2003/2004,30/12/2003,NA,NA,NA,chick,C41572,Y-pGM,Y-pGM,female,DNA,NA,female,NA,55,48.89,16.95,18.4,NA,102,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+2003/2004,30/12/2003,NA,NA,NA,chick,C41573,Y-BM,Y-BM,female,DNA,NA,female,NA,54.5,46.06,16.48,18.8,NA,88,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+2003/2004,3/02/2004,NA,NA,NA,chick,C41575,BM-B?,B-BM,female,DNA,NA,female,NA,58.5,45.91,16.86,17.84,NA,96,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+2005/2006,23/12/2005,NA,NA,NA,chick,C69005,M-KY,M-KY,female,DNA,NA,female,NA,58,NA,19,NA,NA,118,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,Katrina Hansen,NA
+2005/2006,31/12/2005,NA,NA,NA,chick,C69006,M-KB,M-KB,female,DNA,NA,female,NA,64,49.51,18,20.38,NA,110,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,Katrina Hansen,NA
+2005/2006,9/01/2006,NA,NA,NA,chick,C69007,M-KR,M-KR,female,DNA,NA,female,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,Katrina Hansen,NA
+2005/2006,18/01/2006,NA,NA,NA,chick,C69008,M-RK,M-RK,female,DNA,NA,female,NA,52,47.99,17,19.27,NA,99,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,Katrina Hansen,NA
+2006/2007,28/12/2006,NA,NA,NA,chick,C69011,M-pGK,M-pGK,female,DNA,NA,female,NA,56,30.8,17.7,16.6,NA,101,NA,NA,NA,NA,NA,NA,1,19,but,NA,no,Katrina Hansen,NA
+2006/2007,2/01/2007,NA,NA,NA,chick,C69013,M-YK,M-YK,female,DNA,NA,female,NA,61,46.97,16.6,16.3,NA,88,NA,NA,NA,NA,NA,NA,1,20,but,NA,no,Tony Beauchamp,NA
+2006/2007,9/01/2007,NA,NA,NA,chick,C69015,KR-M,KR-M,female,DNA,NA,female,NA,62,49.5,NA,16.15,NA,100,NA,NA,NA,NA,NA,NA,1,19,but,NA,no,Tony Beauchamp,NA
+2006/2007,9/01/2007,NA,NA,NA,chick,C69016,WK-M,WK-M,female,DNA,NA,female,NA,45,45,NA,15.2,NA,68,NA,NA,NA,NA,NA,NA,1,19,but,NA,no,Tony Beauchamp,NA
+2007/2008,3/01/2008,NA,NA,NA,chick,C69021,WM-B,WM-B,female,DNA,NA,female,NA,46,46.45,15.63,15.38,NA,70.7,NA,NA,NA,NA,NA,NA,1,19,but,3.5,no,Tony Beauchamp,NA
+2008/2009,13/02/2009,NA,NA,NA,chick,C75804,KM-Y,KM-Y,female,DNA,NA,female,NA,NA,46.3,21.6,16.9,NA,91,NA,NA,NA,NA,NA,NA,1,20,but,4 mm yellow over metal,Tetrahydrofuran,David Wilson,NA
+2009/2010,24/12/2009,NA,NA,NA,chick,C69029,BM-Y,BM-Y,female,DNA,NA,female,NA,80,51.2,19.8,16.8,NA,104,NA,NA,NA,NA,NA,NA,1,19,but,NA,Tetrahydrofuran,Tony Beauchamp,NA
+2009/2010,24/12/2009,NA,NA,NA,chick,C69030,pGM-B,pGM-B,female,DNA,NA,female,NA,77,51,19.2,15.2,NA,105,NA,NA,NA,NA,NA,NA,1,19,but,NA,Tetrahydrofuran,Tony Beauchamp,NA
+2009/2010,27/12/2009,NA,NA,NA,chick,C69031,pGM-Y,pGM-Y,female,DNA,yes in nest database as both,female,NA,71,49.4,17.4,15.7,NA,93.6,NA,NA,NA,NA,NA,NA,1,19,but,4.0 pail green,Tetrahydrofuran,Tony Beauchamp,NA
+2009/2010,24/12/2009,NA,NA,NA,chick,C75805,KpG-M,KpG-M,female,DNA,NA,female,NA,50.5,49.1,17.2,15.7,NA,105,NA,NA,NA,NA,NA,NA,1,18,but,NA,Tetrahydrofuran,David Wilson,NA
+2009/2010,24/12/2009,NA,NA,NA,chick,C75806,KB-M,KB-M,female,DNA,NA,female,NA,59.5,49.1,17.9,16.1,NA,108,NA,NA,NA,NA,NA,NA,1,18,but,NA,Tetrahydrofuran,David Wilson,NA
+2010/2011,13/12/2010,NA,NA,NA,chick,C69036,W-WM,W-WM,Female,DNA,NA,female,NA,69,49.8,18.9,14.5,NA,91.4,NA,NA,NA,NA,NA,NA,1,21,but,3.5 mm white,Tetrahydrofuran,Tony Beauchamp,NA
+2010/2011,26/12/2010,NA,NA,NA,chick,C69037,RM-Y,RM-Y,Female,DNA,NA,female,NA,63,48.8,17.6,15.7,NA,98,NA,NA,NA,NA,NA,NA,1,20,but,4.0mm red,Tetrahydrofuran,Tony Beauchamp,NA
+2010/2011,26/12/2010,NA,NA,NA,chick,C69038,W-pGM,W-pGM,Female,DNA,NA,female,NA,54,48,17.55,15,NA,90,NA,NA,NA,NA,NA,NA,1,20,but,3.5 mm pg,Tetrahydrofuran,Tony Beauchamp,NA
+2010/2011,20/01/2011,NA,NA,NA,chick,C75816,YM-W,YM-W,Female,DNA,NA,female,NA,54,47.6,17.4,16.9,NA,100,NA,NA,NA,NA,NA,NA,1,19,but,3.5mm yellow,Tetrahydrofuran,David Wilson,NA
+2011/2012,22/12/2011,NA,NA,NA,chick,C75822,R-WM,R-WM,Female,DNA,NA,female,NA,60,48.6,16.2,17,NA,105,NA,NA,NA,NA,NA,NA,1,19,but,3.5mm white,Tetrahydrofuran,David Wilson,NA
+2011/2012,24/12/2011,NA,NA,NA,chick,C75900,W-BM,W-BM,Female,DNA,NA,female,NA,59,50.6,17.1,16.2,NA,111,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm blue,Tetrahydrofuran,David Wilson,NA
+2012/2013,9/01/2013,NA,NA,NA,chick,C75823,RM-BW,RM-BW,female,behaviour,NA,female,NA,63,50.7,18.8,17,NA,112,NA,NA,NA,NA,NA,NA,1,19,but,3.2mm red,Tetrahydrofuran,David Wilson,NA
+2012/2013,9/01/2013,NA,NA,NA,chick,C75824,RM-KR,RM-KR,female,behaviour,NA,female,NA,62,49.3,17.4,16.6,NA,93,NA,NA,NA,NA,NA,NA,1,18,but,3.2mm red,Tetrahydrofuran,David Wilson,NA
+2012/2013,5/01/2013,NA,NA,NA,chick,C75896,WM-RB,WM-RB,Female,DNA,NA,female,never breeding plumage,50,46.2,16,15.3,NA,93,NA,NA,NA,NA,NA,NA,1,19,but,3.2mm white,Tetrahydrofuran,David Wilson,nicknamed ghost bird-no breeding plumage
+2013/2014,24/12/2013,NA,NA,NA,chick,C75827,K-BM,K-BM,female,DNA,NA,female,NA,NA,52.4,19.4,16.1,NA,118,NA,NA,NA,NA,NA,NA,1,21,but,3.5mm blue,Tetrahydrofuran,David Wilson,NA
+2013/2014,1/01/2014,NA,NA,NA,chick,C75888,BM-R,BM-R,Male,DNA,NA,female,NA,61,50.1,18,15.4,NA,115,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm red,Tetrahydrofuran,David Wilson,NA
+2013/2014,20/12/2013,NA,NA,NA,chick,C75894,pG-BM,pG-BM,female,DNA,NA,female,NA,67,52.5,18.9,16.8,NA,110,NA,NA,NA,NA,NA,NA,1,20,but,3.5mm blue,Tetrahydrofuran,David Wilson,NA
+2014/2015,12/12/2014,restoration site 1,NA,NA,chick,C69040,RpG-BM,RpG-BM,Female,DNA,NA,female,NA,65,50.8,19,18,NA,104,NA,NA,NA,NA,NA,NA,1,18,but,4.5 mm blue,Tetrahydrofuran,Tony Beauchamp,NA
+2014/2015,12/12/2014,restoration site 1,NA,NA,chick,C69041,BM-KR,BM-KR,Female,DNA,NA,female,NA,64,52.2,20.4,19,NA,104,NA,NA,NA,NA,NA,NA,1,19,but,4.5 mm blue,Tetrahydrofuran,Tony Beauchamp,NA
+2014/2015,9/02/2015,NA,NA,NA,chick,C69042,RW-KM,RW-KM,Female,DNA,NA,female,NA,61,49.1,17.6,16.2,NA,102,NA,NA,NA,NA,NA,NA,1,18,but,4 mm black,Tetrahydrofuran,Tony Beauchamp,NA
+2014/2015,12/01/2015,NA,NA,NA,chick,C75829,BM-pG,BM-pG,Female,DNA,NA,female,NA,61,50,17.8,16.6,NA,102,NA,NA,NA,NA,NA,NA,1,17,but,3.5mm blue,Tetrahydrofuran,David Wilson,NA
+2014/2015,12/01/2015,NA,NA,NA,chick,C75881,KM-pG,KM-pG,Female,DNA,NA,female,NA,66,50.8,18.2,16.3,NA,111,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm black,Tetrahydrofuran,David Wilson,NA
+2014/2015,8/12/2014,NA,NA,NA,chick,C75883,RM-K,RM-K,Female,DNA,NA,female,NA,60,48.1,17.6,16.3,NA,101,NA,NA,NA,NA,NA,NA,1,18,but,3.3mm red,Tetrahydrofuran,David Wilson,NA
+2014/2015,8/12/2014,NA,NA,NA,chick,C75884,BM-K,BM-K,Female,DNA,NA,female,??,57,49.4,17.5,16.2,NA,103,NA,NA,NA,NA,NA,NA,1,18,but,3.3mm blue,Tetrahydrofuran,David Wilson,NA
+2014/2015,8/12/2014,NA,NA,NA,chick,C75885,KM-B,KM-B,Female,DNA,NA,female,NA,58,48.9,16.9,16.1,NA,100,NA,NA,NA,NA,NA,NA,1,18,but,3.3mm black,Tetrahydrofuran,David Wilson,NA
+2014/2015,8/12/2014,NA,NA,NA,chick,C75886,pG-KM,pG-KM,Female,DNA,NA,female,NA,56,49,17.1,16.2,NA,97,NA,NA,NA,NA,NA,NA,1,17,but,3.3mm black,Tetrahydrofuran,David Wilson,NA
+2014/2015,8/12/2014,NA,NA,NA,chick,C75887,WM-pG,WM-pG,Female,DNA,NA,female,NA,59,49,17.7,17.2,NA,96,NA,NA,NA,NA,NA,NA,1,18,but,3.3mm white,Tetrahydrofuran,David Wilson,NA
+2015/2016,7/12/2015,NA,NA,NA,chick,C75831,R-KM,R-KM,male,DNA,NA,female,NA,63,49.2,18.6,16.6,NA,98,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm black,Tetrahydrofuran,David Wilson,NA
+2015/2016,7/12/2015,NA,NA,NA,chick,C75832,K-KM,K-KM,female,DNA,NA,female,NA,63,50,18.1,15.6,NA,101,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm black,Tetrahydrofuran,David Wilson,NA
+2016/2017,16/01/2017,waipu east,NA,NA,chick,C69045,YM-pG,YM-pG,Female,DNA,NA,female,NA,59,48.1,16.7,15,NA,99,NA,NA,NA,NA,NA,NA,1,19,but,5mm Acetone yellow,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2016/2017,20/01/2017,bund,NA,NA,chick,C69047,BM-WpG,BM-WpG,female,DNA Jana,NA,female,NA,58,51,18.1,15,NA,120,NA,NA,NA,NA,NA,NA,1,20,but,5mm Acetone blue,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2016/2017,31/01/2017,waller,NA,NA,chick,C75879,WM-RW,WM-RW,Female,DNA,NA,female,NA,60,49.2,17.3,16.6,NA,107,NA,NA,NA,NA,NA,NA,1,19,but,3.5mm white,glue,David Wilson,NA
+2017/2018,3/01/2018,north creater,NA,NA,chick,C69051,M-W,WM-W,female,behaviour,NA,female,NA,64,51,17.8,17.2,3.3,111,NA,NA,NA,NA,NA,NA,1,18,but,3 mm while,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2017/2018,7/01/2018,south sea valley,NA,NA,chick,C69052,pGM-nil,pGM-W,female,DNA,NA,female,NA,47,49,17.9,15.9,3.2,110,NA,NA,NA,NA,NA,NA,1,20,but,3 mm pail green,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2019/2020,19/12/2019,Bund,NA,NA,chick,C69058,pGY-pGM,pGY-pGM,unknown,DNA Jana,NA,female,NA,64,50.3,19.5,15.8,NA,105,NA,NA,NA,NA,NA,NA,1,19,but,pG 4.5 mm,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2019/2020,31/12/2019,SSV,NA,NA,chick,C69060,RB-YM,RB-YM,unknown,DNA Jana,NA,female,NA,57,49.4,19,15,NA,98,NA,NA,NA,NA,NA,NA,1,19,but,all 4.5 mm,glue (red celluloid and others acetate),Tony Beauchamp,NA
+2019/2020,4/01/2020,SSV,NA,NA,chick,C69061,pGR-WM,pGR-WM,unknown,DNA Jana,NA,female,NA,57,49.1,48,17.8,NA,100,NA,NA,NA,NA,NA,NA,1,19,but,all 4.5 mm,"THF pG and Red then glued, Blue clued",Tony Beauchamp,NA
+2020/2021,12/12/2020,2nd restoration,NA,NA,chick,C69064,YM-BpG,YM-BpG,female,DNA Jana,NA,female,NA,63,49.2,18.1,12.5,NA,97,NA,NA,NA,NA,NA,NA,1,18,but,all 4.0 mm,All glued with plastic fix,Troy Makan,NA
+2020/2021,2/01/2021,restoration shell bank,NA,NA,chick,C69066,WM-KW,WM-KW,unknown,Unknown,NA,female,NA,59,48.6,19.9,15.4,NA,97,NA,NA,NA,NA,NA,NA,1,19,but,all 4.0 mm,All glued with plastic fix,Tony Beauchamp,NA
+2020/2021,6/01/2021,Zoo,NA,NA,chick,C69067,pGM-RW,pGM-RW,unknown,DNA Jana,NA,female,NA,61,52.1,21,15.4,2.8,112,NA,NA,NA,NA,NA,NA,1,23,but,all 4.0 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,6/12/2021,Te hue Beach Papakanui,NA,NA,chick,C69069,YM-WK,YM-WK,NA,DNA-Massey,NA,female,NA,57,49,18,16.2,4,100,NA,NA,NA,NA,NA,NA,1,18,but,all 4.5 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,30/12/2021,Te Arai aviary,pink,NA,chick,C69072,WM-pGR,WM-pGR,NA,DNA-Massey,NA,female,NA,69,49,18.1,15.8,4,89,NA,NA,NA,NA,NA,NA,1,19,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,2/01/2022,Dredge,452,NA,chick,C69076,RM-KpG,RM-KpG,NA,DNA-Massey,NA,female,NA,54,47.8,17,15.2,3,90,NA,NA,NA,NA,NA,NA,1,17,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,4/01/2022,Dredge,452,NA,chick,C69078,KM-BK,KM-BK,NA,DNA-Massey,NA,female,NA,57,46.2,17,15.4,3,81.5,NA,NA,NA,NA,NA,NA,1,17,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,18/01/2022,Dredge,454,NA,chick,C69082,KW-RM,KW-RM,NA,DNA-Massey,NA,female,NA,59,48.2,18.1,14.2,3,101,NA,NA,NA,NA,NA,NA,1,18,but,3.2 band and 4 mm non-band leg,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,27/01/2022,Dredge,aviary W,NA,chick,C69083,pGB-KM,pGB-KM,NA,DNA-Massey,NA,female,NA,63,57.9,21.2,15.6,2.4,136,NA,NA,NA,NA,NA,NA,1,26,but,3.2 band and 4 mm non-band leg,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,8/02/2022,Sandspit,457,NA,chick,C69084,YK-BM,YK-BM,NA,DNA-Massey,NA,female,NA,61,48.6,16,17.6,2.8,101,NA,NA,NA,NA,NA,NA,1,18,but,all colours 4 mm,All glued with plastic fix,Ayla Wiles TB colours,NA
+2003/2004,5/02/2004,NA,NA,NA,adult,C43876,RpG-M,RpG-M,NA,NA,NA,female,NA,69.5,63.8,28.63,19.63,NA,195,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,hatched 14/01/1998
+2009/2010,23/12/2010,NA,NA,NA,adult,C28703,M-WR,M-WR,NA,NA,NA,female,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,replaced colour bands
+1991/1992,6/01/1992,NA,NA,NA,chick,C43756,B-M,B-M,male,Unknown,NA,male,NA,63.5,54.5,21.4,17.1,NA,129,NA,NA,NA,NA,NA,NA,1,23,NA,NA,no,NA,NA
+1992/1993,7/02/1993,NA,NA,NA,chick,C42539,WB-M,WB-M,male,Unknown,NA,male,NA,62,50.9,18.8,16.7,NA,124,NA,NA,NA,NA,NA,NA,1,23,NA,NA,no,NA,NA
+1993/1994,27/01/1994,NA,NA,NA,chick,C43771,R-M,R-M,male,Unknown,NA,male,NA,50.5,49.4,17.8,17,NA,95.5,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,NA,NA
+1994/1995,26/01/1995,NA,NA,NA,chick,C43812,pG-M,pG-M,male,Unknown,NA,male,NA,50,52.15,21.25,19.35,NA,90,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+1994/1995,26/01/1995,NA,NA,NA,chick,C43813,pGY-M,pGY-M,male,Unknown,NA,male,NA,63,59,19.7,25.5,NA,124,NA,NA,NA,NA,NA,NA,1,20,NA,NA,no,NA,NA
+1997/1998,5/01/1998,NA,NA,NA,chick,C43873,RW-M,RW-M,male,field obs,NA,male,NA,50,46,15.1,16,NA,102,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,NA,NA
+1997/1998,11/01/1998,NA,NA,NA,chick,C43875,RB-M,RB-M,male,behaviour,NA,male,NA,68,51.1,16.4,18.7,NA,104,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+1997/1998,13/01/1998,NA,NA,NA,chick,C43877,BY-M,BY-M,male,DNA,NA,male,NA,60,50.1,18.3,18.8,NA,97,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+1997/1998,13/01/1998,NA,NA,NA,chick,C43878,BR-M,BR-M,male,DNA,NA,male,NA,54,49.3,18.5,18.4,NA,93,NA,NA,NA,NA,NA,NA,1,16,NA,NA,no,NA,NA
+1997/1998,13/01/1998,NA,NA,NA,chick,C43879,BpG-M,BpG-M,male,Unknown,NA,male,NA,52.5,49.5,17.3,17.1,NA,93,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+1998/1999,21/03/1999,NA,NA,NA,adult,C43880,M-RY,M-RY,male,DNA,NA,male,NA,70,65.7,29.6,16.8,NA,190,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1998/1999,27/01/1999,zoo,NA,NA,juvenile,C44003,pGR-M,pGR-M,male,DNA,female,male,NA,66,61.78,NA,15.31,NA,190,NA,NA,NA,NA,NA,NA,1,34,NA,NA,no,NA,NA
+1999/2000,28/12/1999,NA,NA,NA,chick,C28709,M-YW,M-YW,male,Unknown,NA,male,NA,61.5,51.2,17.8,18.5,NA,103,NA,NA,NA,NA,NA,NA,1,16,NA,NA,Tetrahydrofuran,NA,NA
+2000/2001,31/12/2000,NA,NA,NA,chick,C41554,M-YR,M-YR,male,DNA?,NA,male,NA,52.2,49.8,17.27,18.41,NA,104,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+2000/2001,18/01/2001,NA,NA,NA,chick,C41557,M-RB,M-RB,male,DNA?,NA,male,NA,59.5,47.41,16.17,18.22,NA,95,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+2000/2001,31/12/2000,NA,NA,NA,chick,C44014,M-pGY,M-pGY,male,behaviour,NA,male,NA,60.5,48.73,18.02,19.41,NA,98,NA,NA,NA,NA,NA,NA,1,47,NA,NA,no,NA,NA
+2001/2002,18/12/2001,NA,NA,NA,chick,C41565,M-RpG,M-RpG,male,DNA,NA,male,NA,55.5,49.05,16.56,18.69,NA,93,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+2002/2003,31/01/2003,NA,NA,NA,chick,C41569,nil-YM,B-YM,male,DNA,NA,male,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,19,but,NA,no,NA,NA
+2002/2003,1/02/2003,NA,NA,NA,chick,C41570,nil-pGM,B-pGM,male,DNA,male,male,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,19,but,NA,no,NA,NA
+2003/2004,27/12/2003,NA,NA,NA,chick,C41571,nil-M,B-RM,male,DNA,NA,male,NA,58.5,49.94,18.29,17.76,NA,93,NA,NA,NA,NA,NA,NA,1,16,NA,NA,no,NA,NA
+2003/2004,6/01/2004,NA,NA,NA,chick,C41574,Y-RM,Y-RM,male,DNA,NA,male,NA,57.5,49.9,17.57,17.87,NA,90,NA,NA,NA,NA,NA,NA,1,24,NA,NA,no,NA,NA
+2003/2004,7/01/2004,NA,NA,NA,chick,C44015,Y-WM,Y-WM,male,behaviour,yes,male,NA,56.5,50.14,18.2,18.38,NA,103,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,NA,NA
+2005/2006,23/12/2005,NA,NA,NA,chick,C69004,M-KW,M-KW,male,DNA,male,male,NA,56,NA,18,NA,NA,105,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,Katrina Hansen,NA
+2005/2006,23/01/2006,NA,NA,NA,chick,C69009,M-KpG,M-KpG,male,DNA,NA,male,NA,60,50.24,18,20,NA,103,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,Katrina Hansen,NA
+2005/2006,23/01/2006,NA,NA,NA,chick,C69010,M-WK,M-WK,male,DNA,NA,male,NA,59,51.58,17.5,19.87,NA,109,NA,NA,NA,NA,NA,NA,1,20,NA,NA,no,Katrina Hansen,NA
+2006/2007,2/01/2007,NA,NA,NA,chick,C69012,M-K,M-K,male,DNA,NA,male,NA,54,48.03,17.4,14.7,NA,88,NA,NA,NA,NA,NA,NA,1,19,but,NA,no,Tony Beauchamp,NA
+2006/2007,3/01/2007,NA,NA,NA,chick,C69014,M-BK,M-BK,male,DNA,NA,male,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,16,but,NA,no,Tony Beauchamp,NA
+2006/2007,20/01/2007,NA,NA,NA,chick,C69017,RK-M,RK-M,male,DNA,NA,male,NA,52.5,48.14,15.5,15.11,NA,80,NA,NA,NA,NA,NA,NA,1,18,but,NA,no,Katrina Hansen,NA
+2006/2007,15/02/2007,NA,NA,NA,chick,C69018,KY-M,KY-M,male,DNA,NA,male,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,19,but,NA,no,Tony Beauchamp,NA
+2007/2008,3/01/2008,NA,NA,NA,chick,C69022,RM-B,RM-B,male,DNA,NA,male,NA,54,49.88,17.19,15.47,NA,79.9,NA,NA,NA,NA,NA,NA,1,17,but,3.5,no,Tony Beauchamp,NA
+2007/2008,31/12/2007,NA,NA,NA,chick,C69023,YM-R,YM-R,male,DNA,NA,male,NA,66,51.1,18,15.4,NA,102,NA,NA,NA,NA,NA,NA,1,18,but,NA,no,Tony Beauchamp,NA
+2007/2008,1/02/2008,NA,NA,NA,chick,C69024,M-nil,YM-B,male,DNA,NA,male,yes,60,51.5,19.6,16.3,NA,104,NA,NA,NA,NA,NA,NA,1,20,but,NA,no,Tony Beauchamp,NA
+2007/2008,1/02/2008,NA,NA,NA,chick,C69025,RM-R,RM-R,male,DNA,NA,male,yes,55,51.2,14.6,16.3,NA,95.5,NA,NA,NA,NA,NA,NA,1,20,but,NA,no,Tony Beauchamp,NA
+2007/2008,30/12/2007,NA,NA,NA,chick,C75801,M-R,M-R,male,DNA,NA,male,NA,47,44,14.4,14.4,NA,62,NA,NA,NA,NA,NA,NA,1,18,but,NA,no,David Wilson,NA
+2008/2009,15/01/2009,NA,NA,NA,chick,C69027,R-RM,R-RM,male,DNA,NA,male,NA,61.5,51,18.7,14.3,NA,104,NA,NA,NA,NA,NA,NA,1,19,but,4 mm red over metal,Tetrahydrofuran,Tony Beauchamp,NA
+2008/2009,15/01/2009,NA,NA,NA,chick,C69028,K-YM,K-YM,male,DNA,NA,male,NA,57,51.4,19.1,16.6,NA,109,NA,NA,NA,NA,NA,NA,1,19,but,4 mm yellow over metal,Tetrahydrofuran,David Wilson,NA
+2008/2009,12/01/2009,NA,NA,NA,chick,C75802,pGK-M,pGK-M,male,DNA,NA,male,NA,65,50.8,18.7,18.2,NA,111,NA,NA,NA,NA,NA,NA,1,21,but,NA,no,David Wilson,NA
+2008/2009,12/01/2009,NA,NA,NA,chick,C75803,Y-M,YK-M,male,DNA,NA,male,NA,62,51.1,18.3,22.2,NA,107,NA,NA,NA,NA,NA,NA,1,20,but,NA,no,David Wilson,NA
+2009/2010,27/12/2009,NA,NA,NA,chick,C69032,RM-W,RM-W,male,DNA,NA,male,NA,76,51.6,18.6,17.1,NA,108,NA,NA,NA,NA,NA,NA,1,19,but,4.0 whilte,Tetrahydrofuran,Tony Beauchamp,NA
+2009/2010,15/01/2010,NA,NA,NA,chick,C69033,YM-Y,YM-Y,male,DNA,NA,male,NA,74,50.7,21,17.3,NA,110,NA,NA,NA,NA,NA,NA,1,19,but,4.0 mm yellow,Tetrahydrofuran,Tony Beauchamp,NA
+2009/2010,20/01/2010,NA,NA,NA,chick,C69034,W-YM,W-YM,male,DNA,NA,male,NA,68,50.3,18.1,15.8,NA,96,NA,NA,NA,NA,NA,NA,1,20,but,3.5 yellow,Tetrahydrofuran,Tony Beauchamp,NA
+2009/2010,6/01/2010,NA,NA,NA,chick,C75807,WM-Y,WM-Y,male,DNA,NA,male,NA,60,48,17.3,15.6,NA,94,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm white over metal,Tetrahydrofuran,David Wilson,NA
+2010/2011,13/12/2010,NA,NA,NA,chick,C69035,pG-YM,pG-YM,male,DNA,NA,male,NA,69,51.9,18.9,15.5,NA,90,NA,NA,NA,NA,NA,NA,1,21,but,3.5 mm yellow,Tetrahydrofuran,Tony Beauchamp,NA
+2010/2011,21/12/2010,NA,NA,NA,chick,C75815,B-YM,B-YM,male,DNA,NA,male,NA,56.5,50.7,17.8,16.9,NA,109,NA,NA,NA,NA,NA,NA,1,19,but,3.5mm yellow,Tetrahydrofuran,David Wilson,NA
+2011/2012,21/12/2011,NA,NA,NA,chick,C69039,BM-W,BM-W,Male,DNA,NA,male,NA,55,NA,17.6,16.4,NA,104,NA,NA,NA,NA,NA,NA,1,19,but,4.0mm blue,Tetrahydrofuran,Tony Beauchamp,NA
+2011/2012,22/12/2011,NA,NA,NA,chick,C75821,BM-B,BM-B,male,behaviour,male,male,NA,56.5,48.4,16,16,NA,92,NA,NA,NA,NA,NA,NA,1,18,but,3.2mm blue,Tetrahydrofuran,David Wilson,NA
+2011/2012,3/02/2012,NA,NA,NA,chick,C75898,YM-K,YM-K,Male,DNA,NA,male,NA,59,50,18.2,16.3,NA,106,NA,NA,NA,NA,NA,NA,1,19,but,3.5mm yellow,Tetrahydrofuran,David Wilson,NA
+2011/2012,3/02/2012,NA,NA,NA,chick,C75899,RM-nil,RM-Pg,Male,DNA,NA,male,NA,56,50,17.2,15.8,NA,104,NA,NA,NA,NA,NA,NA,1,20,but,3.5mm red,Tetrahydrofuran,David Wilson,NA
+2012/2013,6/01/2013,NA,NA,NA,chick,C75895,WM-BpG,WM-BpG,Male,DNA,NA,male,NA,64,53,18.4,17.2,NA,116,NA,NA,NA,NA,NA,NA,1,19,but,3.2mm white,Tetrahydrofuran,David Wilson,NA
+2012/2013,5/01/2013,NA,NA,NA,chick,C75897,BK-M,BK-M,Male,DNA,NA,male,NA,56,50,17.9,16.5,NA,109,NA,NA,NA,NA,NA,NA,1,20,but,NA,Tetrahydrofuran,David Wilson,NA
+2013/2014,16/12/2013,NA,NA,NA,chick,C75825,B-KM,B-KM,Male,DNA,NA,male,NA,64,50.7,19.2,17,NA,109,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm black,Tetrahydrofuran,David Wilson,NA
+2013/2014,20/12/2013,NA,NA,NA,chick,C75826,pG-pGM,pG-pGM,Male,DNA,NA,male,NA,61,54.1,19.9,16.7,NA,116,NA,NA,NA,NA,NA,NA,1,20,but,3.5mm pGreen,Tetrahydrofuran,David Wilson,NA
+2013/2014,24/12/2013,NA,NA,NA,chick,C75828,R-pGM,R-pGM,Male,DNA,NA,male,??,63,51.6,18.5,16.4,NA,113,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm pGreen,Tetrahydrofuran,David Wilson,NA
+2013/2014,1/01/2014,NA,NA,NA,chick,C75889,KM-R,KM-R,Male,DNA,NA,male,NA,57,51.7,18.1,16.4,NA,103,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm red,Tetrahydrofuran,David Wilson,NA
+2013/2014,31/12/2013,NA,NA,NA,chick,C75890,K-RM,K-RM,Male,DNA,NA,male,NA,60,50.2,17.6,16.9,NA,108,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm red,Tetrahydrofuran,David Wilson,NA
+2013/2014,29/12/2013,NA,NA,NA,chick,C75891,W-KM,W-KM,Male,DNA,NA,male,NA,55,52.6,18.4,16.8,NA,118,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm black,Tetrahydrofuran,David Wilson,NA
+2013/2014,29/12/2013,NA,NA,NA,chick,C75892,pGM-R,pGM-R,Male,DNA,NA,male,NA,56,50.3,17.3,16.7,NA,100,NA,NA,NA,NA,NA,NA,1,17,but,3.5mm pGreen,Tetrahydrofuran,David Wilson,NA
+2013/2014,27/12/2013,NA,NA,NA,chick,C75893,pG-RM,pG-RM,Male,DNA,NA,male,NA,61,51.1,18,17.1,NA,110,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm red,Tetrahydrofuran,David Wilson,NA
+2014/2015,9/01/2015,NA,NA,NA,chick,C75882,nil-pGM,K-pGM,male,DNA,NA,male,NA,64,49.5,16.3,17.2,NA,96,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm pGreen,Tetrahydrofuran,David Wilson,NA
+2015/2016,4/12/2015,NA,NA,NA,chick,C75830,M-pG,pGM-pG,female,DNA,NA,male,NA,NA,42,15.2,15.8,NA,84,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm pGreen,Tetrahydrofuran,David Wilson,NA
+2015/2016,17/12/2015,NA,NA,NA,chick,C75880,WM-WB,WM-WB,male,DNA,NA,male,??,60,48.1,17,18.4,NA,93,NA,NA,NA,NA,NA,NA,1,18,but,3.5mm white,Tetrahydrofuran,Mailee Stanbury,NA
+2016/2017,23/12/2016,ssv,NA,NA,chick,C69043,K-WM,K-WM,unknown,DNA,NA,male,NA,58,48.8,16.9,16.2,NA,90,NA,NA,NA,NA,NA,NA,1,19,but,3.5 mmwhite,Tetrahydrofuran,Tony Beauchamp,NA
+2016/2017,3/01/2017,dredge,NA,NA,chick,C69044,pG-WM,pG-WM,male,behaviour,NA,male,NA,66,51.1,15,15,NA,110,NA,NA,NA,NA,NA,NA,1,19,but,4.5 mmwhite,Tetrahydrofuran,Tony Beauchamp,NA
+2016/2017,20/01/2017,bund,NA,NA,chick,C69046,RM-RW,RM-RW,Female,DNA,NA,male,NA,60,50.1,18.8,15.8,NA,110,NA,NA,NA,NA,NA,NA,1,19,but,5mm all celulose,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2017/2018,10/12/2017,dredge,NA,NA,chick,C69048,Y-KM,Y-KM,male,DNA,NA,male,NA,57,51.2,17.4,15.2,NA,106,NA,NA,NA,NA,NA,NA,1,20,but,4 mm black,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2017/2018,19/12/2017,bund,NA,NA,chick,C69049,R-YM,R-YM,male,DNA,NA,male,NA,57,48.6,18,15.2,NA,91,NA,NA,NA,NA,NA,NA,1,19,but,4mm yellow,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2017/2018,19/12/2017,south sea valley,NA,NA,chick,C69050,KM-nil,KM-W,Male,DNA,NA,male,NA,62,48.6,18.2,18,NA,104,NA,NA,NA,NA,NA,NA,1,19,but,4 mm black,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2018/2019,19/01/2019,crater,NA,NA,chick,C69055,YM-YR,YM-YR,unknown,Behaviour,NA,male,NA,63,50.3,19.2,15.5,2.5,97,NA,NA,NA,NA,NA,NA,1,18,but,5 mm all colour bands,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2019/2020,18/12/2019,SSV,NA,NA,chick,C69056,RM-pGB,RM-pGB,unknown,DNA Jana,NA,male,NA,60,51.05,18.6,16.3,NA,104,NA,NA,NA,NA,NA,NA,1,20,but,4.5 red,glue acetate and celluloid after THF sealing of pG band,Tony Beauchamp,NA
+2019/2020,18/12/2019,te Arai,NA,NA,chick,C69057,RY-BM,RY-BM,unknown,DNA Jana,NA,male,NA,49,50.4,18.2,16,NA,104,NA,NA,NA,NA,NA,NA,1,17,but,4.5 blue,red celluloid and glue & yellow and blue acetate glued,Tony Beauchamp,NA
+2019/2020,4/01/2020,SSV,NA,NA,chick,C69062,BR-WM,BR-WM,unknown,DNA Jana,NA,male,NA,59,50.6,18.2,15.1,NA,108,NA,NA,NA,NA,NA,NA,1,20,but,all 4.0 mm,"THF White and Red then glued, Blue glued",Tony Beauchamp,NA
+2019/2020,16/12/2019,beach,NA,NA,chick,C75833,pGM-YB,pGM-YB,male,behaviour,likely female,male,NA,54,52.2,18.1,16.8,NA,112,NA,NA,NA,NA,NA,NA,1,18,but,3.2mm pGreen,Tetrahydrofuran (celluloid) & glue (acetate),David Wilson,NA
+2020/2021,12/12/2020,2nd restoration,NA,NA,chick,C69065,YpG-RM,YpG-RM,Male,DNA Jana,NA,male,NA,67,51.8,17.9,15.3,NA,109,NA,NA,NA,NA,NA,NA,1,19,but,all 4.0 mm,All glued with plastic fix,Troy Makan,NA
+2021/2022,30/12/2021,Te Arai aviary,yellow,NA,chick,C69070,M-RY,M-RY,NA,DNA-Massey,NA,male,NA,57,51.6,18.7,16,3.2,98,NA,NA,NA,NA,NA,NA,1,21,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,30/12/2021,Te Arai aviary,red,NA,chick,C69071,RK-RM,RK-RM,NA,DNA-Massey,NA,male,NA,57,48,17.4,15.1,2.8,82,NA,NA,NA,NA,NA,NA,1,20,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,30/12/2021,Te Arai aviary,purple,NA,chick,C69073,RB-WM,RB-WM,NA,DNA-Massey,NA,male,NA,52,47.6,17.6,15.3,3.3,75,NA,NA,NA,NA,NA,NA,1,18,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,2/01/2022,Dredge,451,NA,chick,C69074,YM-pGR,YM-pGR,NA,DNA-Massey,NA,male,NA,60,48.1,17.9,15,3.2,96,NA,NA,NA,NA,NA,NA,1,18,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,2/01/2022,Dredge,450,NA,chick,C69075,WB-YM,WB-YM,NA,DNA-Massey,NA,male,NA,58,49.9,18.1,16.5,3,100,NA,NA,NA,NA,NA,NA,1,19,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,2/01/2022,Dredge,451,NA,chick,C69077,BpG-RM,BpG-RM,NA,DNA-Massey,NA,male,NA,66,49.9,19.1,15.4,3.2,105,NA,NA,NA,NA,NA,NA,1,17,but,all 4 mm,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,18/01/2022,Dredge,456,NA,chick,C69079,RpG-KM,RpG-KM,NA,DNA-Massey,NA,male,NA,43,46.2,15.7,17,2.8,92,NA,NA,NA,NA,NA,NA,1,19,but,3.2 band and 4 mm non-band leg,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,18/01/2022,Dredge,456,NA,chick,C69080,RW-BM,RW-BM,NA,DNA-Massey,NA,male,NA,56,49.2,17.7,15.4,3.1,97,NA,NA,NA,NA,NA,NA,1,17,but,3.2 band and 4 mm non-band leg,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,18/01/2022,Dredge,454,NA,chick,C69081,BR-BM,BR-BM,NA,DNA-Massey,NA,male,NA,58,51,17.8,16.1,3,109,NA,NA,NA,NA,NA,NA,1,20,but,3.2 band and 4 mm non-band leg,All glued with plastic fix,Tony Beauchamp,NA
+2021/2022,15/02/2022,NA,NA,NA,dead,C69080,RW-BM,RW-BM,NA,NA,NA,male,NA,NA,NA,NA,15,NA,120,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,likely death during cyclone 12/02/2022
+2021/2022,10/01/2022,NA,451,NA,dead,C69074,YM-pGR,YM-pGR,NA,NA,NA,male,NA,44,48.8,18.3,16,2.5,116,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,NA
+2009/2010,23/12/2010,NA,NA,NA,adult,C28709,M-YW,M-YW,NA,NA,NA,male,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,replaced colour bands
+2022/2023,2/12/2022,Papakanui,458,NA,chick,C75834,RpG-YM,RpG-YM,male,Canterbury,NA,male,NA,unknown,50.5,17.4,16.9,,113,NA,NA,NA,NA,NA,NA,1,27,but,all colours 4 mm,All glued with plastic fix,David Wilson,
+2022/2023,16/01/2023,Te Arai aviary,,green,chick,C69085,BM-RY,BM-RY,Female,Canterbury,NA,female,NA,60,54,20,18.2,2.4,131,NA,NA,NA,NA,NA,NA,1,27,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,16/01/2023,Te Arai aviary,,blue,chick,C69086,LB-RM,LB-RM,Male,Canterbury,NA,male,NA,55,59.4,23.1,16,2.6,160,NA,NA,NA,NA,NA,NA,1,33,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,16/01/2023,Te Arai aviary,,purple,chick,C69087,M-RY,M-RY,Male,Canterbury,NA,male,NA,55,57.6,21.2,19,2.9,143,NA,NA,NA,NA,NA,NA,1,28,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,16/01/2023,Te Arai aviary,,red,chick,C69088,YM-RK,YM-RK,Female,Canterbury,NA,female,NA,53,60,22.4,17.8,2.4,161,NA,NA,NA,NA,NA,NA,1,33,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,16/01/2023,Te Arai aviary,,little P,chick,C69089,LY-YM,LY-YM,Male,Canterbury,NA,male,NA,53,47.9,17.1,17.1,2.9,90,NA,NA,NA,NA,NA,NA,1,18,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,16/01/2023,Te Arai aviary,,brown,chick,C69090,KL-BM,KL-BM,Female,Canterbury,NA,female,NA,58,55.3,21.1,18.9,2.4,136,NA,NA,NA,NA,NA,NA,1,27,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,16/01/2023,Te Arai aviary,,aqua,chick,C69091,LM-BL,LM-BL,Male,Canterbury,NA,male,NA,57,55,22,16.4,2.9,128,NA,NA,NA,NA,NA,NA,1,26,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,16/01/2023,Te Arai aviary,,pink,chick,C69092,KM-KY,KM-KY,Female,Canterbury,NA,female,NA,61,53.9,20.8,17.1,2.8,131,NA,NA,NA,NA,NA,NA,1,28,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB present",
+2022/2023,28/01/2023,Waipu,469,NA,chick,C69093,BY-KM,BY-KM,Male,Canterbury,NA,male,NA,64,49.4,19.1,17,3.2,109,NA,NA,NA,NA,NA,NA,1,20,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,28/01/2023,Waipu,469,NA,chick,C69094,YL-BM,YL-BM,Male,Canterbury,NA,male,NA,57,47.4,16.5,19.2,3.1,85,NA,NA,NA,NA,NA,NA,1,16,but,weld 4 mm high,Welded,"Ayla Wiles supervised, TB & TM present",
+2022/2023,17/02/2023,Waipu,NA,NA,dead,C69093,BY-KM,BY-KM,male,NA,NA,male,NA,NA,58.3,23.7,NA,,168,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,likely died cyclone Gabrielle 14/02/2023. degraded amphipods eaten rhamphotheca
+2022/2023,17/02/2023,Waipu,NA,NA,dead,C69094,YL-BM,YL-BM,male,NA,NA,male,NA,NA,56.4,20,NA,,151,NA,NA,NA,NA,NA,NA,0,NA,NA,NA,NA,NA,likely died cyclone Gabrielle 14/02/2023. degraded amphipods eaten rhamphotheca
+2023/2024,30/12/2023,mangawhai,478,NA,Chick,C69095,RY-RM,RY-RM,male,Canterbury,NA,male,NA,51,52.7,20,17,3,110,NA,NA,NA,NA,NA,NA,1,20,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,30/12/2023,mangawhai,475,NA,Chick,C69096,WM-WK,WM-WK,female,Canterbury,NA,female,NA,57,52.3,20,16.1,3,119,NA,NA,NA,NA,NA,NA,1,20,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,9/01/2024,Te Arai aviary,NA,blue,Chick,C69097,BM-WB,BM-WB,Male,Canterbury,NA,male,NA,64,52.9,21.5,16.3,2.1,115,NA,NA,NA,NA,NA,NA,1,19,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,9/01/2024,Te Arai aviary,NA,lime,Chick,C69098,LM-BW,LM-BW,female,Canterbury,NA,female,NA,52,51.7,19.5,16.7,2.7,112,NA,NA,NA,NA,NA,NA,1,20,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,9/01/2024,Te Arai aviary,NA,yellow,Chick,C69099,YM-LY,YM-LY,male,Canterbury,NA,male,NA,55,51,18.6,16.7,2.8,101,NA,NA,NA,NA,NA,NA,1,19,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,9/01/2024,Te Arai aviary,NA,red,Chick,C69100,RM-WY,RM-WY,male,Canterbury,NA,male,NA,58,53.9,28,17,2.9,113,NA,NA,NA,NA,NA,NA,1,19,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,13/01/2024,waipu,482,NA,Chick,C106951,KL-LM,KL-LM,female ,Canterbury,NA,female,NA,50.5,52,17.7,16.4,2.9,93,NA,NA,NA,NA,NA,NA,1,19,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,16/01/2024,mangawhai,480,NA,Chick,C106952,WM-LR,WM-LR,male,Canterbury,NA,male,NA,58,51.6,17.9,16.3,3.2,103,NA,NA,NA,NA,NA,NA,1,18,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,16/01/2024,mangawhai,480,NA,Chick,C106953,YL-YM,YL-YM,male,Canterbury,NA,male,NA,49,52.3,19.6,16,2.9,108,NA,NA,NA,NA,NA,NA,1,19,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,19/01/2024,mangawhai,479,NA,Chick,C106954,RK-KM,RK-KM,male,Canterbury,NA,male,NA,43,48.8,18.1,17.6,3.2,100,NA,NA,NA,NA,NA,NA,1,18,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,26/01/2024,mangawhai,484,NA,Chick,C106955,BW-RM,BW-RM,female,Canterbury,NA,female,NA,62,48.6,17.6,15.8,2.9,100,NA,NA,NA,NA,NA,NA,1,19,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,27/01/2024,mangawhai,483,NA,Chick,C106956,WB-LM,WB-LM,male,Canterbury,NA,male,NA,54,49,17.9,16.4,2.5,91,NA,NA,NA,NA,NA,NA,1,20,but,weld 4 mm high,Welded,Tony Beauchamp,
+2023/2024,27/01/2024,mangawhai,485,NA,Chick,C106957,LM-YK,LM-YK,male,Canterbury,NA,male,NA,54,50.6,19.3,16.6,2.8,104,NA,NA,NA,NA,NA,NA,1,20,but,weld 4 mm high,Welded,Tony Beauchamp,
+1992/1993,5/01/1993,NA,NA,NA,chick,C43801,M-B,M-B,unknown,Unknown,NA,unknown,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+1992/1993,15/01/1993,NA,NA,NA,chick,C43802,M-pG,M-pG,unknown,Unknown,NA,unknown,NA,64,49.4,18.2,16.6,NA,103.7,NA,NA,NA,NA,NA,NA,1,NA,NA,NA,no,NA,NA
+1993/1994,27/01/1994,NA,NA,NA,chick,C43773,M-G,M-G,unknown,Unknown,NA,unknown,NA,60,51,1.8,16,NA,105,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+1995/1996,16/01/1996,NA,NA,NA,chick,C43855,YR-M,YR-M,unknown,Unknown,NA,unknown,NA,58,47.9,18,18.5,NA,97,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+1995/1996,16/01/1996,NA,NA,NA,chick,C43856,WR-M,WR-M,unknown,Unknown,NA,unknown,NA,60,49.1,19.2,18.5,NA,109.5,NA,NA,NA,NA,NA,NA,1,20,NA,NA,no,NA,NA
+1995/1996,16/01/1996,NA,NA,NA,chick,C43857,YB-M,YB-M,unknown,Unknown,NA,unknown,NA,52.5,48.1,16.4,18,NA,94,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+1995/1996,16/01/1996,NA,NA,NA,chick,C43858,YpG-M,YpG-M,unknown,Unknown,NA,unknown,NA,44.5,45.7,15.3,20,NA,77,NA,NA,NA,NA,NA,NA,1,16,NA,NA,no,NA,NA
+1995/1996,26/01/1996,NA,NA,NA,chick,C43861,YW-M,YW-M,unknown,Unknown,NA,unknown,NA,47,46.5,16.6,18.9,NA,85,NA,NA,NA,NA,NA,NA,1,19,NA,NA,no,NA,NA
+2001/2002,29/12/2001,NA,NA,NA,chick,C28701,M-pGW,M-pGW,unknown,Unknown,NA,unknown,NA,58,49,17.9,19.1,NA,95,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,NA,NA
+2001/2002,29/12/2001,NA,NA,NA,chick,C28702,M-pGB,M-pGB,unknown,Unknown,NA,unknown,NA,49,44.8,15.7,18.6,NA,72,NA,NA,NA,NA,NA,NA,1,16,NA,NA,no,NA,NA
+2001/2002,27/11/2001,NA,NA,NA,chick,C41564,M-BR,M-BR,unknown,Unknown,NA,unknown,NA,54,46.92,15.27,18.65,NA,96,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,NA,NA
+2004/2005,31/12/2004,NA,NA,NA,chick,C69001,Y-YM,Y-YM,unknown,Unknown,NA,unknown,NA,60,50.71,17.56,18.2,NA,116,NA,NA,NA,NA,NA,NA,1,17,NA,NA,no,Katrina Hansen,NA
+2004/2005,12/01/2005,NA,NA,NA,chick,C69002,R-BM,R-BM,unknown,Unknown,NA,unknown,NA,58,49.77,17.64,18.89,NA,97,NA,NA,NA,NA,NA,NA,1,18,NA,NA,no,Katrina Hansen,NA
+2004/2005,12/01/2005,NA,NA,NA,chick,C69003,W-RM,w-RM,unknown,Unknown,NA,unknown,NA,58.5,48.16,17.23,17.69,NA,99,NA,NA,NA,NA,NA,NA,1,18,but,NA,no,Katrina Hansen,NA
+2006/2007,16/02/2007,NA,NA,NA,chick,C69019,KW-M,KW-M,unknown,not sexed,NA,unknown,NA,48,48,16,15.97,NA,106.9,NA,NA,NA,NA,NA,NA,1,15,but,NA,no,Tony Beauchamp,NA
+2006/2007,16/02/2007,NA,NA,NA,chick,C69020,KB-M,KB-M,unknown,not sexed,NA,unknown,NA,53,53,15.5,15.55,NA,107,NA,NA,NA,NA,NA,NA,1,16,but,NA,no,Tony Beauchamp,NA
+2008/2009,5/01/2009,NA,NA,NA,chick,C69026,WM-R,WM-R,unknown,not sexed,NA,unknown,NA,69,49.8,16.9,16.4,NA,97,NA,NA,NA,NA,NA,NA,1,19,but,4 mm white,no,Tony Beauchamp,NA
+2017/2018,26/01/2018,beach,NA,NA,chick,C69053,KM-YB,KM-YB,unknown,DNA,NA,unknown,NA,46,48.3,16.6,16,3.2,92,NA,NA,NA,NA,NA,NA,1,18,but,3.5 mm black and blue,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2018/2019,3/01/2019,beach,NA,NA,chick,C69054,BM-pGB,BM-pGB,female,DNA,likely m,male,NA,67,51.5,19.8,16.8,NA,109,NA,NA,NA,NA,NA,NA,1,19,but,4 mm all colour bands,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2019/2020,21/12/2019,te Arai,NA,NA,chick,C69059,KM-WB,KM-WB,unknown,Unknown,NA,unknown,NA,55,48,17.2,16.9,3,100,NA,NA,NA,NA,NA,NA,1,18,but,4.5 Black,Tetrahydrofuran & glue,Tony Beauchamp,NA
+2020/2021,15/01/2021,SSV,NA,NA,chick,C69068,RB-KM,RB-KM,unknown,Unknown,NA,unknown,NA,60,51.6,19.1,15.4,2.8,112,NA,NA,NA,NA,NA,NA,1,19,but,all 4.0 mm,All glued with plastic fix,Tony Beauchamp,NA
+2024/2025,5/12/2024,te arai,,blue,chick,C106958,WM-BR,WM-BR,unknown,,,,NA,60.5,53.4,18.8,18.5,3.1,107,,,,,,,,,but,weld 3.5,,,
+2024/2025,5/12/2024,te arai,,yellow,chick,C106959,KM-YL,KM-YL,unknown,,,,NA,60,52.9,19.7,16.5,2.6,106,,,,,,,,,but,weld 3.5,,,
+2024/2025,5/12/2024,te arai,,red,chick,C106960,LM-RY,LM-RY,unknown,,,,NA,54,50.3,18.5,17,2.8,100,,,,,,,,,but,weld 3.5,,,
+2024/2025,5/12/2024,te arai,,green,chick,C106961,BM-LY,BM-LY,unknown,,,,NA,54,50.8,18,16.5,2.9,83,,,,,,,,,but,weld 3.5,,,
+2024/2025,12/12/2024,te arai,,,chick,C106962,RM-WL,RM-WL,unknown,,,,NA,64,52.5,20,16.5,3.1,106,,,,,,,,,but,weld 3.5,,,
+2024/2025,21/12/2024,mangawhai,489,,chick,C106963,YM-KL,YM-KL,unknown,,,,NA,60.1,51.4,17.5,16.4,3,104,,,,,,,,19,but,weld 3.5,,,
+2024/2025,21/12/2024,mangawhai,489,,chick,C106964,WM-BK,WM-BK,unknown,,,,NA,60,51.6,19.8,17.2,2.8,114,,,,,,,,20,but,weld 3.5,,,
+2024/2025,23/12/2024,te arai,,orange,chick,C106965,RM-YR,RM-YR,unknown,,,,NA,54,50.7,18.2,16,2.9,107,,,,,,,,,but,weld 3.5,,,
+2024/2025,23/12/2024,te arai,,black,chick,C106966,BM-BR,BM-BR,unknown,,,,NA,51,50.9,18.9,16.8,3,104,,,,,,,,,but,weld 3.5,,,
+2024/2025,27/12/2024,te arai,,purple,chick,C106967,YM-KB,YM-KB,unknown,,,,NA,62,50.3,18.5,20,3.4,111,,,,,,,,,but,weld 3.5,,,
+2024/2025,29/12/2024,mangawhai,492,,chick,C106968,KM-RW,KM-RW,unknown,,,,NA,65,50.7,18.8,18.6,2.9,87,,,,,,,,18,but,weld 3.5,,,
+2024/2025,29/12/2024,waipu,493,,chick,C106969,LM-WR,LM-WR,unknown,,,,NA,61,50.3,17.2,16,2.8,87,,,,,,,,18,but,weld 3.5,,,
+2024/2025,29/12/2024,waipu,493,,chick,C106970,WR-WM,WR-WM,unknown,,,,NA,51,52,19.4,16,2.8,100,,,,,,,,17,but,weld 3.5,,,
+2024/2025,31/12/2024,mangawhai,494 ex 492 nest,,chick,C106971,M-LK,M-LK,unknown,,,,NA,45,45.2,16.7,14.1,2.9,78,,,,,,,,19,but,weld 3.5,,,
+2024/2025,31/12/2024,mangawhai,495,,chick,C106972,W-LM,W-LM,unknown,,,,NA,63,53.4,19.5,16,3,116,,,,,,,,20,but,weld 3.5,,,
+2024/2025,31/12/2024,mangawhai,495,,chick,C106973,WY-RM,WY-RM,unknown,,,,NA,64,52.2,18.6,16.5,3,111,,,,,,,,19,but,weld 3.5,,,
+2024/2025,1/01/2025,mangawhai,496,,chick,C106974,BY-BM,BY-BM,unknown,,,,NA,55,49.5,16.9,16.1,3,101,,,,,,,,18,but,weld 3.5,,,
+2024/2025,1/01/2025,mangawhai,496,,chick,C106975,YB-KM,YB-KM,unknown,,,,NA,56,51.7,18.7,16.9,3,110,,,,,,,,18,but,weld 3.5,,,
+2024/2025,7/01/2025,Papakanui,498,,chick,C106976,M-WL,M-WL,unknown,,,,NA,49,45.8,15.5,15.4,2.9,80,,,,,,,,18,but,weld 3.5,,,
+2024/2025,7/01/2025,Papakanui,498,,chick,C106977,RY-LM,RY-LM,unknown,,,,NA,71,52.3,18.5,18.4,3.1,119,,,,,,,,20,but,weld 3.5,,,
+2024/2025,14/02/2025,mangawhai,502,,chick,C106978,BM-KW,BM-KW,unknown,,,,NA,55,48.8,17.8,17,3.1,96,,,,,,,,19,but,weld 3.5,,,
