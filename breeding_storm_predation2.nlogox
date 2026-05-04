@@ -1,0 +1,2901 @@
+<?xml version="1.0" encoding="utf-8"?>
+<model version="NetLogo 7.0.0" snapToGrid="false">
+  <code><![CDATA[
+
+; GLOBAL VARIABLES -------------------------------------------------------------------
+globals[
+  season          ; breeding or non-breeding season
+  year            ; year in the model run 
+  total_birds     ; total number of living birds
+  day             ; day of year
+  total_eggs      ; total number of eggs laid in the season 
+  chick_deaths    ; total number of chick deaths
+  combined_egg_losses      ; combined egg losses 
+  
+  next_id_no
+  
+  ; fleding length 
+  mean_fledge 
+  sd_fledge 
+  min_fledge 
+  
+  ; relay rates 
+  clutch1_total
+  clutch2_total
+  clutch3_total 
+  
+  ; break down egg and chick losses 
+  all_eggs
+  infertile_eggs
+  fertile_eggs
+  failed_to_hatch
+  abandoned_eggs 
+  hatched 
+  abandoned_chicks
+  diseased_chicks
+  fledged
+
+  juvenile_deaths
+  immature_deaths
+  adult_deaths
+  
+  winter_adult_deaths
+  winter_juvenile_deaths
+  winter_immature_deaths
+  
+  juvenile_success
+  immature_success
+  
+  ; storm specific globals 
+  storm_no          ; for per season reporting 
+  storm_active?     ; whether a storm is happening
+  storm_severity    ; "small" / "large" / "extreme"
+  storm_days_left   ; number of days remaining in the storm
+  egg_abandonments
+  failed_nests
+  storm_egg_loss
+  storm_chick_loss
+  
+  storm_adult_deaths 
+  storm_immature_deaths
+  storm_juvenile_deaths
+  
+  ; predation specific globals 
+  avian_predator_active?    ; is a predator active? (by type)
+  mam_predator_active?
+
+  avian_species
+  mam_species 
+  
+  avian_predator_days_left
+  mam_predator_days_left
+  
+  ; tracking attacks of specific predator types 
+  gull_pres
+  shorebird_pres
+  kahu_pres
+  rat_pres
+  other_mam_pres
+  cat_pres 
+  
+  egg_loss_mammals
+  egg_loss_avian
+  chick_loss_mammals
+  chick_loss_avian 
+  
+  
+  
+  
+  ; annual trackers  
+  annual_egg_loss_avian 
+  annual_egg_loss_mammals 
+  annual_total_eggs_laid 
+  annual_chick_loss_avian 
+  annual_chick_loss_mammals 
+  annual_total_chicks_hatched
+  
+  annual_adult_start_year
+  annual_adult_survival 
+]
+
+
+; TURTLE VARIABLES -------------------------------------------------------------------
+turtles-own[
+  
+  id_no
+  sex
+  age_years       ; age of bird
+  age_day         ; + day of year
+  life_stage      ; chick, juvenile, immature, adult
+  breeding?       ; will the bird make a breeding attempt?
+  courting_time   ; time since courting began
+  courting_length ; the time this pair will take to court
+  pair_id         ; pair id of a courted bird
+  nesting_patch   ; nest location
+
+  condition          ; how well the bird is doing/the energy budget of the bird
+  fertility_score    ; a combination of the parents condition and their genetic_code (diversity)
+
+
+ ; incubating?        ; is the bird currently inclubating?
+  incubation_time     ; time since incubation began
+  incubation_length   ; number of days the clutch will need to be incubating 
+  fledge_length       ; number of days the chick will need to fledge
+  nest_reset          ; length of time since failed or completed clutch (required for relay attempt)
+  nest_reset_length   ; the length of time a bird needs before relaying 
+  
+  clutch_state       ; "none" "incubating" "failed" "hatched" "finished"
+  clutch_no          ; clutch number (of the breeding season)
+  clutch_size        ; number of eggs in clutch
+  fertile_eggs?      ; are the eggs fertile?
+  chicks_alive       ; number of dependent chicks currently alive
+  final_clutch?
+  chick_status       ; to keep track of abandoned chicks 
+
+
+  mother             ; maternal parent of the bird
+  father             ; paternal parent of the bird
+  siblings           ; in the same clutch
+  previous_pair      ; pair_id from the last season  
+
+]
+
+; PATCH VARIABLES --------------------------------------------------------------------
+patches-own[
+habitat_suitability
+]
+
+; SET UP PROCEDURE -------------------------------------------------------------------
+to setup
+  ca
+
+  ; globals---------------------------------------------------------------------------
+   set season "non-breeding" 
+   set day 122   ; starting in April 
+   set year 0
+
+   set infertile_eggs 0
+   set failed_to_hatch 0
+   set chick_deaths 0
+   set fertile_eggs 0
+   set combined_egg_losses 0
+
+   set juvenile_deaths 0
+   set immature_deaths 0
+   set adult_deaths 0
+   set total_eggs 0
+   set abandoned_eggs 0
+   set failed_to_hatch 0
+   set hatched 0
+   set abandoned_chicks 0
+   set diseased_chicks 0
+   set fledged 0
+
+   set mean_fledge 31
+   set sd_fledge 3
+   set min_fledge 28 
+   set clutch1_total 0
+   set clutch2_total 0
+   set clutch3_total 0 
+  
+   set winter_adult_deaths 0
+   set winter_juvenile_deaths 0
+   set winter_immature_deaths 0
+  
+   set next_id_no 1
+  
+   set juvenile_success 0
+   set immature_success 0
+  
+  ; storm variables 
+   set storm_active? false
+   set storm_severity ""
+   set storm_days_left 0
+   set storm_no 0
+   set storm_egg_loss 0
+   set storm_chick_loss 0
+  
+   set storm_adult_deaths 0
+   set storm_immature_deaths 0
+   set storm_juvenile_deaths 0
+  
+  ; predation 
+   set avian_predator_active? false 
+   set mam_predator_active? false
+   set avian_species "none"
+   set mam_species "none"
+   set avian_predator_days_left 0
+   set mam_predator_days_left 0
+
+   set gull_pres 0
+   set shorebird_pres 0
+   set kahu_pres 0
+   set rat_pres 0
+   set other_mam_pres 0
+   set cat_pres 0 
+  
+   set egg_loss_mammals 0
+   set egg_loss_avian 0
+   set chick_loss_mammals 0
+   set chick_loss_avian 0 
+   
+  
+   set annual_egg_loss_avian 0
+   set annual_egg_loss_mammals 0
+   set annual_total_eggs_laid 0
+  
+   set annual_chick_loss_avian 0
+   set annual_chick_loss_mammals 0
+   set annual_total_chicks_hatched 0
+   
+   set annual_adult_survival 0
+  
+
+; create turtles -------------------------------------------------------------------
+create-turtles initial_number [  ; controlled by a slider on the interface
+  set size 6
+  setxy random-xcor random-ycor
+  move-to one-of patches
+    
+  set id_no next_id_no
+  set next_id_no  next_id_no + 1  
+
+  ; sex (60% male)
+  set sex ifelse-value (random-float 1 < 0.6)
+    ["male"] ["female"]
+
+  ; life stage ---------------------------------------
+    
+  ; 80% adults, 10% juveniles, 10% immatures (for now)
+let r random-float 1
+
+
+ifelse r < 0.56 [
+  ; adults (56%)
+  set life_stage "adult"
+ ; set age_years 2 + random 20
+  set age_years floor random-triangular 2 5 21
+  set age_day random  40 + random 80 ; during the breeding season 
+  set color blue
+
+] [
+  ifelse r < 0.74 [
+    ; immatures (18%)
+    set life_stage "immature"
+    set age_years 1
+    set age_day random  40 + random 80
+    set color red                  
+
+  ] [
+    ; juveniles (26%)
+    set life_stage "juvenile"
+    set age_years 0
+    set age_day 40 + random 80 
+    set color green
+  ]
+]
+
+  ; breeding variables ------------------------------
+  set breeding? false
+  set incubation_time 0
+  set courting_time 0
+  set courting_length 0
+  set clutch_no 0
+  set mother nobody
+  set father nobody
+  set siblings nobody
+  set nest_reset  0
+  set clutch_state "none" 
+  set chicks_alive 0
+  set final_clutch? false
+  set chick_status ""
+  set previous_pair nobody 
+  set nest_reset_length 0
+
+
+  ; bird condition ----------------------------------
+
+  set condition random-normal 0.8 0.2 
+  set condition max list 0 min list condition 1 
+
+  ; for now - look at fertility submodels plan 
+  set fertility_score 0.75
+]
+  ; patch variables -----------------------------------------------------------
+                                    
+ask patches [
+  set habitat_suitability random-float 1
+]
+  
+  repeat 5 [
+  ask patches [
+    set habitat_suitability (habitat_suitability +
+      mean [habitat_suitability] of neighbors) / 2
+  ]
+]
+  
+  let min-val min [habitat_suitability] of patches
+  let max-val max [habitat_suitability] of patches
+
+ask patches [
+  set habitat_suitability (habitat_suitability - min-val) / (max-val - min-val)
+]
+  
+  let target round (0.044 * count patches)
+
+let threshold sort [habitat_suitability] of patches
+set threshold item (length threshold - target) threshold
+
+ask patches [
+  if habitat_suitability >= threshold [
+      set habitat_suitability one-of [0.8 0.9 1]
+  ]
+]
+  
+  ask patches [
+  set pcolor scale-color yellow habitat_suitability 0 1
+]
+  
+  set annual_adult_start_year count turtles with [life_stage = "adult"]
+
+  reset-ticks
+end
+
+; GO PROCEDURE ----------------------------------------------------------------
+to go
+  
+    if ticks >= 18300 [ ; stop after 50 years 
+    stop]
+  
+  ; breeding procedures 
+  court 
+  
+  clutch_manager ; clutch control (managing relays)
+  
+  hatch_eggs
+  
+  chick_phase 
+  
+  fledge_chicks
+  
+  ; threat procedures
+  storm
+  
+  predation
+  
+  ; mortality procedures 
+  energy_expenditure
+    
+  off_season ; winter condition + mortality calculations
+
+  ; reset and display procedures 
+  new_day
+  
+  update_outputs
+  
+  tick ; each tick represents 1 day
+
+end
+
+; courting procedure (breeding season only) ----------------------------------
+to court 
+    if season = "non-breeding" [stop] ; birds only court to prepare for breeding
+
+  ask turtles [               
+
+  ; continue courting --------------------------------------------------------
+  if clutch_state = "paired" [                        ; if they are already courted their time courting will increase (move towards laying)
+      set courting_time courting_time + 1     ; if they have had an unsuccessful clutch they will stay in the same pair for the season
+  ]      ; create individual courting times to add some variation to the timing of laying
+
+  ;  begin courting ----------------------------------------------------------
+    if clutch_state = "none" and life_stage = "adult" and sex = "female"  and condition > courting_condition [
+      
+      ; select potential pair
+      let candidate_males other turtles with [
+      clutch_state = "none" and life_stage = "adult" and sex = "male" and condition > courting_condition ]
+      
+      let previous_male one-of candidate_males with [who = previous_pair]
+      
+      let potential_male nobody 
+      
+      if previous_male != nobody and random-float 1 < 0.5 [
+        set potential_male previous_male
+      ]
+      
+      if potential_male = nobody [set potential_male one-of candidate_males]
+      
+      ; make a courting attempt - not all birds to successfully pair 
+      let courting_attempt? random-float 1 < court_success
+
+      ; if previous_pair != nobody and it meets the potential_male criteria there is a 50% chance they will pair again
+      ; pair them
+      if potential_male != nobody and courting_attempt? [
+      set breeding? true ; for output updates 
+      set clutch_state "paired"
+      set courting_time courting_time + 1
+      set pair_id [who] of potential_male
+      set previous_pair pair_id
+      set courting_length random-normal 8 2
+        
+      ; set pair variables   
+        ask potential_male [
+          set breeding? true
+          set clutch_state "paired"
+          set courting_time courting_time + 1
+          set pair_id [who] of myself
+        ]
+      ]
+      if not courting_attempt? [
+      set clutch_state "non-breeder"
+        if potential_male != nobody [
+    ask potential_male [
+     ; set clutch_state "non-breeder"
+        ]
+      ]
+    ]
+  ]
+  ]
+end 
+
+; incubation procedure ------------------------------------------------------------
+to clutch_manager
+
+  ; paired females will begin the incubation process 
+  ask turtles with [
+    sex = "female" and
+    pair_id != nobody and
+    clutch_state != "finished" and 
+    life_stage = "adult"
+  ] [
+
+    ; clutch_state = none → attempt clutch
+    ; ----------------------------------------
+    if clutch_state = "paired" [
+      if courting_time > courting_length [ ; if courting theshold met?
+        attempt_new_clutch
+      ]
+      stop
+    ]
+
+    ; clutch_state = incubating
+    ; ----------------------------------------
+    if clutch_state = "incubating" [
+      progress_incubation
+      stop
+    ]
+
+    ; clutch_state = failed or fledged → relay decision
+    ; ----------------------------------------
+    if member? clutch_state ["failed" "fledged" "abandoned_chicks"][
+      decide_relay
+      stop
+    ]
+  ]
+end
+
+
+; incubation attempt --------------------------------------------------------------
+to attempt_new_clutch
+
+  if pair_id = nobody [ stop ] ; the bird must be courted 
+  if clutch_no > 3 [ stop ]
+
+  ; find a suitable nesting site ------------------------------
+  let nest max-one-of patches with [
+    habitat_suitability > patch_threshold
+    and not any? turtles in-radius 2
+  ][habitat_suitability]
+  if nest = nobody [ stop ]     
+
+  move-to nest
+  set nesting_patch nest
+
+  ; begin incubation ------------------------------------------
+  set clutch_no clutch_no + 1
+  set clutch_state "incubating" ; incubating
+  set incubation_time 0
+
+  ; set incubating variables ----------------------------------
+  ; length
+  set incubation_length (22 + random 4)
+   
+  ; clutch size
+
+  
+  ifelse random-float 1 < (mean_clutch_no - 1) [
+  set clutch_size 2
+] [
+  set clutch_size 1
+]
+  
+  set total_eggs total_eggs + clutch_size ; add to total tally 
+  
+ ifelse clutch_no = 1 [
+  set clutch1_total clutch1_total + clutch_size
+]
+[
+  ifelse clutch_no = 2 [
+    set clutch2_total clutch2_total + clutch_size
+  ]
+  [
+    if clutch_no = 3 [
+      set clutch3_total clutch3_total + clutch_size
+    ]
+  ]
+]
+
+  ; fertility (female-driven for now) - this needs to change 
+  set fertile_eggs? (random-float 1 < fertility_score)
+  if fertile_eggs? [set fertile_eggs fertile_eggs + clutch_size]
+  
+  ; update partner 
+    let partner turtle pair_id
+    if partner != nobody [
+      ask partner [
+        set clutch_state "incubating"
+        move-to [nesting_patch] of myself
+        set clutch_no [clutch_no] of myself
+        set incubation_time 0
+        set clutch_size [clutch_size] of myself
+        set incubation_length [incubation_length] of myself
+        set fledge_length [fledge_length] of myself
+      ]
+    ]
+  
+end
+
+; continue incubation until hatch ---------------------------------------------------
+to progress_incubation
+  
+  ; incubating birds only 
+  if clutch_state != "incubating" [ stop ] 
+  
+  let partner nobody 
+  if pair_id != nobody [
+   set partner turtle pair_id]
+  ;let partner turtle pair_id
+
+  ; partner death check -------------------------------------
+  if partner = nobody [
+    set clutch_state "finished" 
+     set breeding? false
+     set pair_id nobody
+    set combined_egg_losses combined_egg_losses + clutch_size
+    set abandoned_eggs abandoned_eggs + clutch_size ; management is able to save abandoned eggs  
+    stop
+  ]
+  
+  ; increase incubation time ---------------------------------
+  set incubation_time incubation_time + 1
+  
+  ; update partner 
+      ask partner [
+        set incubation_time [incubation_time] of myself
+      ]
+  
+  ; add in opportunity for infertile eggs to be spotted (candle eggs)
+  if incubation_time = 10 [
+    if random-float 1 < candle_success [ 
+    if not fertile_eggs?[
+      set clutch_state "failed" ; failed - simulate management removing infertile eggs     
+      set nest_reset 0
+      set nest_reset_length max list 0 round random-normal 19 9
+      set infertile_eggs infertile_eggs + clutch_size        
+      ask partner [
+          set clutch_state "failed" ]
+      ]
+    ]
+  ]
+  
+  
+  ; identify fertile eggs -> hatch --------------------------
+  if incubation_time >= incubation_length [
+    if fertile_eggs? [
+      set clutch_state "hatching" ; hatched
+      ask partner [
+          set clutch_state "hatching"
+      ]
+    ]
+    
+   ; remove remaining infertile eggs --------------------------------- 
+    if not fertile_eggs? [
+      set clutch_state "failed" ; failed
+      set infertile_eggs infertile_eggs + clutch_size
+      set nest_reset 0
+      set nest_reset_length max list 0 round random-normal 19 9
+      ask partner [
+          set clutch_state "failed"
+      ]
+   ]
+  ]
+end
+
+; determine if the pair will relay ----------------------------------------------
+to decide_relay
+  
+  set nest_reset nest_reset + 1
+  if nest_reset <= nest_reset_length [stop]
+  
+  let relay? false
+  
+  let partner turtle pair_id
+
+  ; check the condition of the pair -------------------------
+  if (clutch_no = 1 or clutch_no = 2) and partner != nobody and season = "breeding"[
+  set relay? (condition > breeding_condition
+              and [condition] of partner > breeding_condition) ; both birds must have the energetic capacity to relay
+]
+  
+    ; for now a pair will not relay if chicks successfully fledge 
+  if clutch_state = "fledged" [
+    set relay? false]
+  
+  if final_clutch? [
+    set relay? false ] ; maybe change this to say past a certain date they can't relay (look at the egg data)
+
+  ; initiate relay attempt -----------------------------------
+  if relay? [
+    set clutch_state "none" ; none
+    set courting_time 1
+    set nest_reset 0
+    
+     ; update partner
+    if partner != nobody [
+      ask partner [
+        set clutch_state "none" ; none
+        set courting_time 1
+      ]
+    ]
+  ]
+
+  ; halt relay attempt ---------------------------------------
+  if not relay? [
+     ; update partner 
+    if partner != nobody [
+      ask partner [
+        set clutch_state "finished"
+        set breeding? false
+        set pair_id nobody
+      ]
+    ]
+    
+    ; end breeding season for the pair 
+    set clutch_state "finished" 
+    set breeding? false
+    set pair_id nobody
+  ]
+  
+end
+
+
+; successful incubations -> hatched eggs ---------------------------------------------
+to hatch_eggs
+
+  ; female birds that are incubating will hatch their successful eggs --
+  ask turtles with [sex = "female" and clutch_state = "hatching"] [
+    
+    
+    ; hatch failure (each egg is independent)
+    let hatchlings 0
+    
+    repeat clutch_size [
+      if random-float 1 > hatch_failure [
+        set hatchlings hatchlings + 1
+    ]
+   ]
+    
+    let failed (clutch_size - hatchlings)                ; if failed is equal to clutch size the clutch fails 
+    set failed_to_hatch failed_to_hatch + failed
+    set combined_egg_losses combined_egg_losses + failed
+    
+    ; predetermine fledge length (so it can be passed on to the chick)
+        set fledge_length max list min_fledge
+        round random-normal mean_fledge sd_fledge  
+
+    hatch hatchlings [       
+
+      ; set chick variables ------------------------------------
+      set life_stage "chick"
+      set age_years 0
+      set age_day 1
+      set sex one-of ["male" "female"]
+
+
+      set mother [who] of myself
+      set father [pair_id] of myself
+
+      ; set future adult variables -----------------------------
+      set breeding? false
+      set courting_time 0
+      set courting_length 0
+      set pair_id nobody
+      set incubation_time ""
+      set incubation_length ""
+      set clutch_no 0
+      set fertile_eggs? ""
+      set final_clutch? false
+      set clutch_size 0
+      set clutch_state "none"
+      set chicks_alive 0
+      set nest_reset 0
+      set fledge_length [fledge_length] of myself
+      set chick_status "with_parents"
+      set previous_pair nobody
+      
+      ; condition
+      set condition random-normal 0.8 0.2 
+      set condition max list 0 min list condition 1 
+
+      ; genetics / fertility
+      set fertility_score 0.75    ; change this so it is based on the genetics of the parents (tracking genetic diversity - inlcude an "infertile" gene)
+      
+      set hatched hatched + 1
+    ]
+
+    ; update perents on hatch success ---------------------------- 
+    if hatchlings > 0 [
+    ; update mother's status -------------------------------------
+    set clutch_state "with_chicks"         
+    set chicks_alive hatchlings
+      
+
+    ; update father's status -------------------------------------
+    let partner turtle pair_id
+    if partner != nobody [
+      ask partner [
+        set clutch_state "with_chicks"
+        set chicks_alive hatchlings
+      ]
+    ]
+  ]
+  
+    ; hatch failure ----------------------------------------------
+    if hatchlings = 0 [ 
+      set clutch_state "failed"
+      let partner turtle pair_id
+    if partner != nobody [
+      ask partner [
+        set clutch_state "failed"
+        ]
+      ]
+    ] 
+  ]
+  
+  
+end
+
+; raising chicks ------------------------------------------------------------------- 
+to chick_phase 
+
+  ; chicks will check that their parents are alive ---------------------------------
+  ask turtles with [life_stage = "chick" ] [
+    let mother-agent nobody
+    let father-agent nobody
+
+    if mother != nobody [
+      set mother-agent turtle mother
+    ]
+
+    if father != nobody [
+      set father-agent turtle father
+    ]
+
+     let mother_present? false
+    let father_present? false
+
+    if mother-agent != nobody [
+      let m_state [clutch_state] of mother-agent
+      if m_state = "with_chicks" or m_state = "with_chicks_solo" [
+        set mother_present? true
+      ]
+    ]
+
+    if father-agent != nobody [
+      let f_state [clutch_state] of father-agent
+      if f_state = "with_chicks" or f_state = "with_chicks_solo" [
+        set father_present? true
+      ]
+    ]
+
+    ; determine the chick status ---------------------------------------------------
+    
+    ; both parents caring
+    if mother_present? and father_present? [
+      set chick_status "with_parents"
+    ]
+
+    ; only one parent caring (other dead or abandoned)
+    if (mother_present? != father_present?) [
+      set chick_status "solo_parent"
+      
+      if mother_present? [
+        ask mother-agent [
+          set clutch_state "with_chicks_solo"
+        ]
+      ]
+      
+      if father_present? [
+        ask father-agent [
+          set clutch_state "with_chicks_solo"
+        ]
+      ]
+    ]
+
+    ; no parents caring → chick is abandoned and dies
+    if (not mother_present?) and (not father_present?) [
+      set abandoned_chicks abandoned_chicks + 1
+      die
+    ]
+    
+    ; health check ----------------------------------------------------------------
+    if random-float 1 < chick_health [
+      
+      if mother-agent != nobody [
+        ask mother-agent [
+          set chicks_alive chicks_alive - 1
+          if chicks_alive <= 0 [
+            set clutch_state "finished"
+              set breeding? false
+              set pair_id nobody
+        ]
+      ]
+    ]
+      
+      if father-agent != nobody [
+        ask father-agent [
+          set chicks_alive chicks_alive - 1
+          if chicks_alive <= 0[
+            set clutch_state "finished"
+              set breeding? false
+              set pair_id nobody
+        ]
+      ]
+    ]
+      
+      set diseased_chicks diseased_chicks + 1
+      die 
+      
+    ]
+  ]
+
+  
+end 
+
+; surviving chicks will fledge ---------------------------------------------------
+to fledge_chicks  
+  
+  ask turtles with [life_stage = "chick"] [
+    
+  ; chicks will fledge when they are ready ---------------------------------------
+  if age_day > fledge_length [
+
+    set life_stage "juvenile"
+    move-to one-of patches
+    set color green
+    set fledged fledged + 1
+    set chick_status ""
+    set fledge_length 0
+   
+    
+    ; alert parents that their chick has fledged --------------------------------
+    if mother != nobody [
+      let mother-agent turtle mother
+      if mother-agent != nobody [
+        ask mother-agent [
+          set chicks_alive chicks_alive - 1
+          if chicks_alive <= 0 [
+              set clutch_state "finished"
+              set breeding? false
+              set pair_id nobody
+           ]
+        ]
+      ]
+    ]
+    if father != nobody [
+      let father-agent turtle father
+      if father-agent != nobody [
+        ask father-agent [
+          set chicks_alive chicks_alive - 1
+          if chicks_alive <= 0[
+              set clutch_state "fledged"
+              set breeding? false
+              set pair_id nobody
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+
+end
+
+to storm 
+  
+  ; we are only simulating breeding season storms 
+  if season = "non-breeding" [stop] 
+  
+  ; active storm continues:  
+  if storm_active? [
+    
+    if storm_days_left = 0 [
+      set storm_active? FALSE
+      stop
+    ]
+    
+    set storm_days_left storm_days_left - 1
+    
+    let storm_condition_loss 0
+    let juvenile_loss 0  ; play around with this 
+    let nest_risk 0
+    
+    ; daily consequences of a small storm
+    if storm_severity = 1  [ ;"small"
+      
+      ; condition drops - reduced foraging capacity (for all independent birds)
+      set storm_condition_loss small_cond_loss ; slider 
+      set juvenile_loss (storm_condition_loss * juv_cond_loss)
+      
+      ask turtles with [life_stage = "adult" or life_stage = "immature" or life_stage = "juvenile"] [
+        set condition condition - storm_condition_loss
+        
+        ; juveniles will loose more condition (less profficient at foraging) 
+        ask turtles with [life_stage = "juvenile"] [
+        set condition condition - juvenile_loss]
+        
+        if ((clutch_state = "incubating" or clutch_state = "with_chicks") and sex = "female") [  ; incubating females determine nest risk
+          
+          let hs [habitat_suitability] of patch-here
+          let noise (random-float 0.2 - 0.1)   ;range: -0.1 to +0.1
+          
+          set nest_risk (1 - (hs / 2) + noise)  
+          
+          if nest_risk > nest_risk_thresh_small [
+    
+            ; add probability based on storm length and intensity
+            if random-float 1 < nest_loss_small [    
+              
+              if clutch_state = "incubating"[
+              set clutch_state "failed"
+              set failed_nests failed_nests + 1
+              set storm_egg_loss storm_egg_loss + clutch_size 
+              ; alert partner 
+              let partner turtle pair_id
+              if partner != nobody [
+                ask partner [
+                  set clutch_state "failed"    
+                ]
+              ]
+            ]
+              
+              if clutch_state = "with_chicks" [
+                set clutch_state "finished"
+                set storm_chick_loss storm_chick_loss + clutch_size 
+                let partner turtle pair_id
+                if partner != nobody [
+                ask partner [
+                  set clutch_state "finished"   
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+    
+    ; daily consequence of a large storm 
+     if storm_severity = 2 [ ; "large" 
+    ; condition drops - reduced foraging capacity 
+    set storm_condition_loss large_cond_loss
+    set juvenile_loss (storm_condition_loss * juv_cond_loss)
+      
+    ask turtles with [life_stage = "adult" or life_stage = "immature" or life_stage = "juvenile"] [      
+        set condition condition - storm_condition_loss
+        
+        ; juveniles will loose more condition (less profficient at foraging) 
+        ask turtles with [life_stage = "juvenile"] [
+        set condition condition - juvenile_loss]
+        
+        if ((clutch_state = "incubating" or clutch_state = "with_chicks") and sex = "female") [  ; incubating females determine nest risk
+          
+          let hs [habitat_suitability] of patch-here
+          let noise (random-float 0.2 - 0.1)   ;range: -0.1 to +0.1
+          
+          set nest_risk (1 - (hs / 2) + noise)  
+          
+         
+          if nest_risk  > nest_risk_thresh_large [
+            
+            ; add probability based on storm length and intensity
+            if random-float 1 < nest_loss_large [
+              
+              if clutch_state = "incubating" [
+              set clutch_state "failed"     
+             ; set failed_nests failed_nests + 1
+              set storm_egg_loss storm_egg_loss + clutch_size 
+              
+              let partner turtle pair_id
+              if partner != nobody [
+                ask partner [
+                  set clutch_state "failed"   
+                  ]
+                ]
+              ]
+              
+              if clutch_state = "with_chicks"[
+                set clutch_state "finished"
+                set storm_chick_loss storm_chick_loss + clutch_size 
+                let partner turtle pair_id
+                if partner != nobody [
+                ask partner [
+                  set clutch_state "finished"   
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+    
+    ; daily consequence of an extreme storm 
+    if storm_severity = 3 [ ; "extreme" 
+      ; condition drops - reduced foraging capacity 
+      set storm_condition_loss extreme_cond_loss
+      set juvenile_loss (storm_condition_loss * juv_cond_loss)
+      
+      ask turtles with [life_stage = "adult" or life_stage = "immature" or life_stage = "juvenile"] [
+         set condition condition - storm_condition_loss
+        
+        ; juveniles will loose more condition (less profficient at foraging) 
+        ask turtles with [life_stage = "juvenile"] [
+        set condition condition - juvenile_loss]
+        
+        if ((clutch_state = "incubating" or clutch_state = "with_chicks") and sex = "female") [  ; incubating females determine nest risk
+          
+          let hs [habitat_suitability] of patch-here
+          let noise (random-float 0.2 - 0.1)   ;range: -0.1 to +0.1
+          
+          set nest_risk (1 - (hs / 2) + noise)  
+          
+          if nest_risk > nest_risk_thresh_extreme [
+            
+            ; add probability based on storm length and intensity
+            if random-float 1 < nest_loss_extreme [
+              
+              if clutch_state = "incubating" [
+              set clutch_state "failed"      
+              set failed_nests failed_nests + 1
+              set storm_egg_loss storm_egg_loss + clutch_size 
+              
+              let partner turtle pair_id
+              if partner != nobody [
+                ask partner [
+                  set clutch_state "failed"
+                ]
+              ]
+            ]
+            
+              if clutch_state = "with_chicks" [
+                set clutch_state "finished"
+                set storm_chick_loss storm_chick_loss + clutch_size 
+                let partner turtle pair_id
+                if partner != nobody [
+                ask partner [
+                  set clutch_state "finished"   
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+  
+    ; start a new storm ---------------------------------
+  
+  if season = "breeding" [
+    if not storm_active? [
+   ; let storm_event 1 - storm_prob
+    if random-float 1 < storm_prob [ ; a new storm begins
+      
+      
+      ; determine severity 
+      let s random-float 1
+      set storm_severity ifelse-value (s < 0.7) [1]
+                         [ifelse-value (s < 0.90) [2] [3]]
+      
+      ; determine length 
+      set storm_days_left random-poisson 1 ; think about the distribution for this - a 6 day storm is v long
+      if storm_days_left < 1 [ set storm_days_left 1 ]
+      
+      set storm_active? true
+      set storm_no storm_no + 1
+      
+      print (word "New " storm_severity " storm started, lasting " storm_days_left " days.")
+    ]
+  ]
+]
+end 
+
+to predation 
+  
+  ; only occurs during breeding season
+  if season != "breeding" [ stop ]
+
+  ; predator arrives --------------------------------
+
+  if not avian_predator_active? [
+    if random-float 1 < avian_predator_prob [
+      set avian_predator_active? true
+      
+      let p_gull 0.61
+      let p_kahu 0.28
+      let p_shorebird 0.11
+      
+      ; determine the type of avian predator 
+      let r random-float 1;
+      ifelse r < p_gull [
+        set avian_species "gull"                        ; play around with this
+        set gull_pres gull_pres + 1] [
+        ifelse r < (p_gull + p_kahu) [
+          set avian_species "kahu"
+          set kahu_pres kahu_pres + 1] [
+          set avian_species "shorebird"
+          set shorebird_pres shorebird_pres + 1
+  ]
+]
+ 
+      
+      ; determine length of predator presence 
+      let duration 1
+      while [random-float 1 < 0.75] [ ; switch this to a slider to play around with it 
+        set duration duration + 1]
+      set avian_predator_days_left duration
+    ]
+  ]
+
+  if not mam_predator_active? [
+    if random-float 1 < mam_predator_prob [
+      set mam_predator_active? true
+      
+      ; determine the type of mammalian predator 
+      let r random-float 1; rat 0.9, mustellid 0.08, cat 0.02
+      ifelse r < 0.9 [  
+        set mam_species "rat"
+        set rat_pres rat_pres + 1 ] [  
+        ifelse r < 0.98 [    
+          set mam_species "other" 
+          set other_mam_pres other_mam_pres + 1 ] [    
+          set mam_species "cat" 
+          set cat_pres cat_pres + 1] 
+      ]
+      
+      ; determine length of predator presence 
+      let duration 1
+      while [random-float 1 < 0.75] [ ; switch this to a slider to play around with it - could have different length for each predator type 
+        set duration duration + 1]
+      set mam_predator_days_left duration
+    ]
+  ]
+    
+  ; avian predators ----------------------------------
+  
+  if avian_predator_days_left > 0 [
+    
+    ; pick between eggs or chicks 
+    
+   let egg_attack false 
+   let chick_attack false 
+   
+  ; others pick one or the other
+  ifelse random-float 1 < 0.4
+    [ set egg_attack true ]
+    [ set chick_attack true ]
+
+
+    ; egg predation ----------------
+    if egg_attack [
+    
+    ; make a list of vulnerable nests 
+    let vulnerable_nests turtles with [
+      sex = "female" and 
+      clutch_state = "incubating" and 
+      clutch_size > 0 ]
+    
+    ; only continue if nests are present 
+    if any? vulnerable_nests [
+      
+      ; sort by lowest habitat suitability 
+      let sorted_nests sort-by [[a b] -> [habitat_suitability] of a < [habitat_suitability] of b] vulnerable_nests
+      
+      ; decide how many nests to attack 
+      let nests_to_attack 0
+      
+        if avian_species = "gull" [
+          set nests_to_attack 1
+        ]
+        if avian_species = "kahu" [
+          set nests_to_attack 1
+        ]
+      if avian_species = "shorebird" [
+        set nests_to_attack 1
+      ]
+        
+        let targets turtle-set sublist sorted_nests 0 (min list nests_to_attack length sorted_nests)
+        
+          ask targets [
+        
+        ; set mean eggs taken based on predator
+        let mean_take 0
+        if avian_species = "gull" [ set mean_take gull_egg_take ]
+        if avian_species = "kahu" [ set mean_take kahu_egg_take ]
+        if avian_species = "shorebird" [ set mean_take shorebird_egg_take ]
+
+  ; draw number of eggs taken (Poisson)
+  let eggs_taken random-poisson mean_take
+        
+  ; ensure at least 1 egg is taken if attack happens
+  if eggs_taken < 1 [ set eggs_taken 1 ]
+
+  ; cannot take more eggs than exist
+  set eggs_taken min list eggs_taken clutch_size
+        
+  ; update clutch
+  set clutch_size clutch_size - eggs_taken
+
+  ; update counters       
+  set egg_loss_avian egg_loss_avian + eggs_taken
+  set annual_egg_loss_avian annual_egg_loss_avian + eggs_taken
+
+  
+
+
+  ; check for clutch failure
+  if clutch_size <= 0 [
+    set clutch_size 0
+    set clutch_state "finished"
+
+    let partner turtle pair_id
+    if partner != nobody [
+      ask partner [
+        set clutch_size 0
+              set clutch_state "finished" ]
+      ]
+    ]
+  ]
+]
+    ]
+
+
+    
+    ; chick predation ----------------
+    
+    if chick_attack [
+    ; select vulnerable chicks
+    let vulnerable_chicks turtles with [
+      life_stage = "chick" ]
+    
+    if any? vulnerable_chicks [
+
+  ; sort by lowest habitat suitability
+  let sorted_chicks sort-by [[a b] -> [habitat_suitability] of a < [habitat_suitability] of b] vulnerable_chicks
+
+  ; decide how many chicks to attack
+  let chick_take_mean 0
+    
+        if avian_species = "gull" [ set chick_take_mean gull_chick_take ]
+        if avian_species = "kahu" [ set chick_take_mean kahu_chick_take ]
+        if avian_species = "shorebird" [ set chick_take_mean shorebird_chick_take ]
+
+  ; draw number of eggs taken (Poisson)
+    let chicks_to_attack random-poisson chick_take_mean
+
+    let targets turtle-set sublist sorted_chicks 0 (min (list chicks_to_attack length sorted_chicks))
+
+    ask targets [
+
+      set chick_deaths chick_deaths + 1
+      set chick_loss_avian chick_loss_avian + 1
+      set annual_chick_loss_avian annual_chick_loss_avian + 1
+
+      ; sibling attack (optional: keep stochastic)
+ ;     if any? other turtles-here with [life_stage = "chick"] [
+  ;      if random-float 1 < sibling_attack [
+
+   ;       set chick_deaths chick_deaths + 1
+   ;       set chick_loss_predators chick_loss_predators + 1
+   ;       set chick_loss_avian chick_loss_avian + 1
+   ;       set annual_chick_loss_avian annual_chick_loss_avian + 1
+
+   ;       if turtle mother != nobody [
+   ;         ask turtle mother [ set clutch_size clutch_size - 1 ]
+   ;       ]
+   ;       if turtle father != nobody [
+   ;         ask turtle father [ set clutch_size clutch_size - 1 ]
+   ;       ]
+
+    ;      die
+     ;   ]
+     ; ]
+
+      ; notify parents
+      if turtle mother != nobody [
+        ask turtle mother [
+          set clutch_size clutch_size - 1
+          if clutch_size <= 0 [ set clutch_state "finished" ]
+        ]
+      ]
+
+      if turtle father != nobody [
+        ask turtle father [
+          set clutch_size clutch_size - 1
+          if clutch_size <= 0 [ set clutch_state "finished" ]
+        ]
+      ]
+
+      die
+    ]
+  ]
+    ]
+
+
+
+    ; reduce active days 
+    set avian_predator_days_left avian_predator_days_left - 1
+
+    if avian_predator_days_left <= 0 [
+      set avian_predator_active? false
+      set avian_species "none"
+    ]
+  ]
+
+  ; mammalian predators -------------------------------------------------
+  
+    if mam_predator_active? and mam_predator_days_left > 0 [
+    
+     
+   let egg_attack false 
+   let chick_attack false 
+   
+   if mam_species = "cat" [
+  ; cats can do both independently
+  if random-float 1 < 0.63 [ set egg_attack true ]
+  if random-float 1 < 0.37 [ set chick_attack true ]
+      ; ensure at least one attack happens
+  if (not egg_attack) and (not chick_attack) [
+    ifelse random-float 1 < 0.63
+      [ set egg_attack true ]
+      [ set chick_attack true ]
+  ]
+]
+
+if mam_species != "cat" [
+  ; others pick one or the other
+  ifelse random-float 1 < 0.63
+    [ set egg_attack true ]
+    [ set chick_attack true ]
+]
+  
+    if egg_attack [
+   ; make a list of vulnerable nests 
+    let vulnerable_nests turtles with [
+      sex = "female" and 
+      clutch_state = "incubating" and 
+      clutch_size > 0 ]
+    
+    ; only continue if nests are present 
+    if any? vulnerable_nests [
+      
+      ; sort by lowest habitat suitability 
+      let sorted_nests sort-by [[a b] -> [habitat_suitability] of a < [habitat_suitability] of b] vulnerable_nests
+      
+      ; decide how many nests to attack 
+      let nests_to_attack 0
+      
+          if mam_species = "rat" [
+            set nests_to_attack 1
+          ]
+          if mam_species = "other" [
+            set nests_to_attack 1
+          ]
+          if mam_species = "cat" [
+            set nests_to_attack 1
+          ]
+        
+
+        
+        let targets turtle-set sublist sorted_nests 0 (min list nests_to_attack length sorted_nests)
+      
+      ask targets [
+      
+      ; set mean eggs taken based on predator
+      let mean_take 0
+      if mam_species = "rat" [ set mean_take rat_egg_take ]
+      if mam_species = "other" [ set mean_take other_egg_take ]
+      if mam_species = "cat" [ set mean_take cat_egg_take ]
+
+  ; draw number of eggs taken (Poisson)
+  let eggs_taken random-poisson mean_take
+        
+  ; ensure at least 1 egg is taken if attack happens
+  if eggs_taken < 1 [ set eggs_taken 1 ]
+
+  ; cannot take more eggs than exist
+  set eggs_taken min list eggs_taken clutch_size
+        
+  ; update clutch
+  set clutch_size clutch_size - eggs_taken
+
+  ; update counters
+  set egg_loss_mammals egg_loss_mammals + eggs_taken
+  set annual_egg_loss_mammals annual_egg_loss_mammals + eggs_taken
+
+
+  ; check for clutch failure
+  if clutch_size <= 0 [
+    set clutch_size 0
+    set clutch_state "finished"
+
+    let partner turtle pair_id
+    if partner != nobody [
+      ask partner [
+        set clutch_size 0
+              set clutch_state "finished" ]
+            ]
+          ]
+        ]
+      ]
+    ]
+
+
+    ; chick predation ----------------
+    
+    if chick_attack [
+    ; select vulnerable chicks
+    let vulnerable_chicks turtles with [
+      life_stage = "chick" ]
+    
+    if any? vulnerable_chicks [
+
+  ; sort by lowest habitat suitability
+  let sorted_chicks sort-by [[a b] -> [habitat_suitability] of a < [habitat_suitability] of b] vulnerable_chicks
+        
+          ; decide how many chicks to attack
+        let chick_take_mean 0
+    
+        if mam_species = "rat" [ set chick_take_mean rat_chick_take ]
+        if mam_species = "other" [ set chick_take_mean other_chick_take ]
+        if mam_species = "cat" [ set chick_take_mean cat_chick_take ]
+
+  ; draw number of eggs taken (Poisson)
+    let chicks_to_attack random-poisson chick_take_mean
+
+        
+    let targets turtle-set sublist sorted_chicks 0 (min (list chicks_to_attack length sorted_chicks))
+
+    ask targets [
+
+      set chick_deaths chick_deaths + 1
+      set chick_loss_mammals chick_loss_mammals + 1
+      set annual_chick_loss_mammals annual_chick_loss_mammals + 1
+
+      ; sibling attack (optional: keep stochastic)
+ ;     if any? other turtles-here with [life_stage = "chick"] [
+ ;       if random-float 1 < sibling_attack [
+
+ ;         set chick_deaths chick_deaths + 1
+  ;        set chick_loss_predators chick_loss_predators + 1
+    ;     set chick_loss_mammals chick_loss_mammals + 1
+    ;      set annual_chick_loss_mammals annual_chick_loss_mammals + 1
+
+     ;     if turtle mother != nobody [
+     ;       ask turtle mother [ set clutch_size clutch_size - 1 ]
+     ;     ]
+     ;     if turtle father != nobody [
+     ;       ask turtle father [ set clutch_size clutch_size - 1 ]
+     ;     ]
+
+     ;     die
+     ;   ]
+     ; ]
+
+      ; notify parents
+      if turtle mother != nobody [
+        ask turtle mother [
+          set clutch_size clutch_size - 1
+          if clutch_size <= 0 [ set clutch_state "finished" ]
+        ]
+      ]
+
+      if turtle father != nobody [
+        ask turtle father [
+          set clutch_size clutch_size - 1
+          if clutch_size <= 0 [ set clutch_state "finished" ]
+        ]
+      ]
+
+      die
+    ]
+  ]
+    ]
+
+    ; reduce active days 
+    set mam_predator_days_left mam_predator_days_left - 1
+
+    if mam_predator_days_left <= 0 [
+      set mam_predator_active? false
+      set mam_species "none"
+    ]
+  ]
+
+end 
+
+; daily energetic costs --------------------------------------------------------
+to energy_expenditure 
+  
+  if season = "non-breeding" [stop]
+  
+  ; general energy requirements ------------------------------------------------
+  ask turtles with [life_stage != "chick"] [
+    ; all birds will gain energy through foraging
+    let gain max list 0 (random-normal mean_foraging_gain sd_foraging_gain)
+
+    
+    ; all birds will lose a certain amount from metabolic expenditure 
+    let cost max list 0 (random-normal mean_metabolic_loss sd_metabolic_loss)
+    
+    ; net energy balance
+    let net-energy gain - cost
+    
+    ; update condition
+    set condition min list 1 (condition + net-energy) ; capped at 1
+  ]
+  
+   ; incubating birds --------------------------------------------------------
+  ask turtles with [clutch_state = "incubating"][
+    set condition condition - incubation_cond_loss
+    
+    ; if condition falls below a point they will abandon the nest
+    if condition < abandon_threshold [
+      set clutch_state "failed" 
+      set nest_reset 0
+      set nest_reset_length max list 0 round random-normal 19 9
+      
+     ; set combined_egg_losses combined_egg_losses + clutch_size
+        set abandoned_eggs abandoned_eggs + clutch_size ;
+      
+        if pair_id != nobody [
+        let partner turtle pair_id
+        ask partner [
+          set clutch_state "failed"
+        ]
+      ]
+    ]
+  ]
+  
+  ; birds with chicks -------------------------------------------------------
+  ask turtles with [clutch_state = "with_chicks"][
+    set condition condition - with_chick_cond_loss    
+    
+    if condition < abandon_threshold [
+      set clutch_state "finished"
+      
+    ]
+  ]
+  
+  ; solo parents 
+  ask turtles with [clutch_state = "with_chicks_solo"][
+    set condition condition - (with_chick_cond_loss * 2)
+  
+  ; if condition drops below threshold the bird will abandon the chicks 
+    if condition < abandon_threshold [
+    set clutch_state "finished"
+    ]
+  ]
+    
+  
+  ; bird death -------------------------------------------------------------- 
+    ask turtles with [condition <= 0] [
+    if life_stage = "adult" [
+    set adult_deaths adult_deaths + 1    ; need to consider the maths census deaths/total adults per year
+    die
+    ]
+    
+    if life_stage = "immature" [
+      set immature_deaths immature_deaths + 1
+      die
+    ]
+    
+    if life_stage = "juvenile" [
+      set juvenile_deaths juvenile_deaths + 1
+      die
+    ]
+  ]
+  
+end 
+
+
+
+
+to off_season 
+  if season = "breeding" [stop]
+  
+  ; during overwintering there is a probability of mortality 
+  
+  ask turtles with [life_stage = "adult"][
+  if random-float 1 <= winter_adult_mort [
+      set winter_adult_deaths winter_adult_deaths + 1
+      die ]
+  ]
+  ; older birds have an additional "sensecene" mortality risk
+  ask turtles with [life_stage = "adult" and age_years > 16][
+    if random-float 1 <= winter_elder_mort[
+      set winter_adult_deaths winter_adult_deaths + 1
+      die]
+  ]
+  
+  ask turtles with [life_stage = "immature"][
+    if random-float 1 <= winter_imm_mort [
+      set winter_immature_deaths winter_immature_deaths + 1
+      die ]
+  ]
+  
+  ask turtles with [life_stage = "juvenile"][
+       if random-float 1 <= winter_juv_mort [
+       set winter_juvenile_deaths winter_juvenile_deaths + 1
+       die ]
+  ]
+  
+  
+end 
+
+
+
+; resetting for a new day -------------------------------------------------------------
+to new_day
+
+  ; end of the year reset -------------------------------------------------------------
+  if day = 365 [
+
+    ; reset breeding variables for all birds
+    ask turtles [
+      set clutch_state "none"
+      set breeding? false
+      set courting_time 0
+      set courting_length 0
+      set incubation_time 0
+      set clutch_no 0
+      set chicks_alive 0
+      set final_clutch? false
+      
+      ask turtles with [life_stage = "adult"][
+        set condition min list 1 (condition + (random-normal mean_breeding_prep sd_breeding_prep))] ; assumes they prep for the upcoming season 
+  ] ]
+  
+  ; update day 
+ifelse day = 365 [
+  set year year + 1
+  set day 0
+] [
+  set day day + 1
+]
+
+
+  ; update season ---------------------------------------
+  ifelse day <= 120[
+    set season "breeding"]
+  [
+    set season "non-breeding"]
+
+  ; end of breeding season (day 91)
+  if day = 121 [
+
+    ; birds with no active nests
+    ask turtles with [clutch_state = "none" or clutch_state = "failed" or clutch_state = "finished"] [
+      set breeding? false
+      set incubation_time 0
+      set clutch_no 0
+      set clutch_state "none"
+      set chicks_alive 0
+    ]
+
+    ; birds still nesting cannot start new clutches
+    ask turtles with
+      [clutch_state = "incubating"
+       or clutch_state = "with_chicks"] [
+      set final_clutch? true
+    ]
+  ]
+
+  if day = 122 and year > 0[
+  
+  ;; yearly reporting
+    yearly_report
+    reset_annual_counters
+  
+  ]
+  ; age update ----------------------------------------
+
+  ask turtles [
+    
+    set age_day age_day + 1
+    if age_day >= 365 [
+      set age_day 0
+      set age_years age_years + 1]
+    
+    ; update life stages
+    ; juveniles 
+    if age_years = 1 and age_day = 0 [
+      set life_stage "immature" 
+      set juvenile_success juvenile_success + 1
+    ]
+
+    ; immatures
+    if age_years = 1 and age_day = 320 [
+      set life_stage "adult"
+      set immature_success immature_success + 1     
+    ]
+
+
+
+  ]
+
+
+  ; demographic reporting -------------------------------
+
+  set total_birds count turtles
+
+end
+
+
+to update_outputs
+  
+ ; plots 
+  ; sex --------------------------------------
+  set-current-plot "sex_ratio"
+
+  set-current-plot-pen "males"
+  plot count turtles with [sex = "male"]
+
+  set-current-plot-pen "females"
+  plot count turtles with [sex = "female"]
+
+  ; breeding ---------------------------------
+  set-current-plot "breeding_population"
+
+  set-current-plot-pen "all_adults"
+  plot count turtles with [life_stage = "adult"]
+
+  set-current-plot-pen "breeding_adults"
+  plot count turtles with [breeding?]
+
+  ; population structure ---------------------
+  set-current-plot "population_structure"
+
+  set-current-plot-pen "adult"
+  plot count turtles with [life_stage = "adult"]
+
+  set-current-plot-pen "immature"
+  plot count turtles with [life_stage = "immature"]
+
+  set-current-plot-pen "juvenile"
+  plot count turtles with [life_stage = "juvenile"]
+
+  set-current-plot-pen "chick"
+  plot count turtles with [life_stage = "chick"]
+  
+  ; age structure ---------------------------
+;  set-current-plot "age_structure"
+  
+;  clear-plot
+  
+;  histogram [age_years] of turtles
+
+  
+end 
+
+to yearly_report
+
+  let hatching_rate 0
+  let fledging_rate 0
+  let productivity 0
+  
+
+  if fertile_eggs > 0 [
+    set hatching_rate hatched / fertile_eggs
+  ]
+
+  if hatched > 0 [
+    set fledging_rate fledged / hatched
+  ]
+
+  if total_eggs > 0 [
+    set productivity fledged / total_eggs
+  ]
+  
+  let total_adult_deaths (adult_deaths + winter_adult_deaths)
+  
+  if annual_adult_start_year > 0 [
+  set annual_adult_survival (annual_adult_start_year - total_adult_deaths) / annual_adult_start_year
+  ]
+
+  print (word "Year: " year)
+  print (word "Total eggs: " total_eggs)
+  print (word "Hatching rate: " hatching_rate)
+  print (word "Fledging rate: " fledging_rate)
+  print (word "Overall productivity: " productivity)
+  print (word "Adult survival: " annual_adult_survival)
+  print "---------------------------"
+
+end
+
+to reset_annual_counters ; write these to a csv
+  
+   set annual_adult_start_year count turtles with [life_stage = "adult"]
+   set adult_deaths 0 
+   set winter_adult_deaths 0
+
+ ; set total_eggs 0
+ ; set infertile_eggs 0
+ ; set fertile_eggs 0
+ ; set combined_egg_losses 0
+ ; set abandoned_eggs 0
+ ; set failed_to_hatch 0
+ ; set hatched 0
+ ; set chick_deaths 0
+ ; set abandoned_chicks 0
+ ; set fledged 0
+ ; set adult_deaths 0
+ ; set immature_deaths 0
+ ; set juvenile_deaths 0
+ ; set winter_adult_deaths 0
+ ; set winter_juvenile_deaths 0
+ ; set winter_immature_deaths 0
+
+  ;set clutch1_total 0
+  ;set clutch2_total 0
+  ;set clutch3_total 0
+
+end
+
+
+; age initiation 
+to-report random-triangular [a-min a-mode a-max]
+  ; Return a random value from a triangular distribution
+  ; https://stackoverflow.com/questions/75748226/it-is-possible-to-create-a-normal-distribution-in-netlogo-with-maximum-and-minim
+  ; original source:
+  ;Method from https://en.wikipedia.org/wiki/Triangular_distribution#Generating_Triangular-distributed_random_variates
+  ; Obtained 2015-11-27
+  if (a-min > a-mode) or (a-mode > a-max) or (a-min >= a-max)
+   [ error (word "Random-triangular received illegal parameters (min, mode, max): " a-min " " a-mode " " a-max) ]
+
+  let a-rand random-float 1.0
+  let F (a-mode - a-min) / (a-max - a-min)
+
+  ifelse a-rand < F
+  [ report a-min + sqrt (a-rand * (a-max - a-min) * (a-mode - a-min)) ]
+  [ report a-max - sqrt ((1 - a-rand) * (a-max - a-min) * (a-max - a-mode)) ]
+end
+
+; reporters 
+to-report storms_per_season
+  ifelse storm_no > 0 
+  [report storm_no / year]
+  [report 0]
+  
+end ]]></code>
+  <widgets>
+    <view x="267" wrappingAllowedX="true" y="73" frameRate="30.0" minPycor="-164" height="663" showTickCounter="true" patchSize="2.0" fontSize="10" wrappingAllowedY="true" width="575" tickCounterLabel="ticks" maxPycor="164" updateMode="0" maxPxcor="142" minPxcor="-142"></view>
+    <slider x="0" step="1" y="66" max="50" width="250" display="initial_number" height="50" min="0" direction="Horizontal" default="50.0" variable="initial_number"></slider>
+    <slider x="0" step="0.1" y="122" max="1" width="250" display="patch_threshold" height="50" min="0" direction="Horizontal" default="0.2" variable="patch_threshold"></slider>
+    <slider x="0" step="1" y="179" max="15" width="250" display="courting_threshold" height="50" min="5" direction="Horizontal" default="10.0" variable="courting_threshold"></slider>
+    <slider x="0" step="0.01" y="235" max="1" width="250" display="court_success" height="50" min="0" direction="Horizontal" default="0.75" variable="court_success"></slider>
+    <slider x="0" step="0.1" y="291" max="1" width="250" display="breeding_condition" height="50" min="0" direction="Horizontal" default="0.8" variable="breeding_condition"></slider>
+    <slider x="0" step="0.01" y="348" max="2" width="250" display="mean_clutch_no" height="50" min="0" direction="Horizontal" default="1.68" variable="mean_clutch_no"></slider>
+    <slider x="0" step="0.001" y="405" max="0.2" width="250" display="incubation_cond_loss" height="50" min="0" direction="Horizontal" default="0.025" variable="incubation_cond_loss"></slider>
+    <slider x="0" step="0.01" y="462" max="1" width="250" display="abandon_threshold" height="50" min="0" direction="Horizontal" default="0.2" variable="abandon_threshold"></slider>
+    <slider x="0" step="0.05" y="520" max="1" width="250" display="hatch_failure" height="50" min="0" direction="Horizontal" default="0.2" variable="hatch_failure"></slider>
+    <slider x="0" step="0.001" y="579" max="1" width="250" display="with_chick_cond_loss" height="50" min="0" direction="Horizontal" default="0.005" variable="with_chick_cond_loss"></slider>
+    <slider x="0" step="1" y="638" max="10" width="250" display="cooling_off_days" height="50" min="0" direction="Horizontal" default="10.0" variable="cooling_off_days"></slider>
+    <button x="5" y="5" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="55">setup</button>
+    <button x="66" y="5" height="40" disableUntilTicks="false" forever="true" kind="Observer" width="55">go</button>
+    <slider x="0" step="0.0001" y="697" max="1" width="250" display="winter_adult_mort" height="50" min="0" direction="Horizontal" default="4.0E-4" variable="winter_adult_mort"></slider>
+    <slider x="0" step="0.0001" y="756" max="1" width="250" display="winter_imm_mort" height="50" min="0" direction="Horizontal" default="3.0E-4" variable="winter_imm_mort"></slider>
+    <slider x="0" step="0.0001" y="815" max="1" width="250" display="winter_juv_mort" height="50" min="0" direction="Horizontal" default="5.0E-4" variable="winter_juv_mort"></slider>
+    <slider x="263" step="0.01" y="756" max="1" width="250" display="courting_condition" height="50" min="0" direction="Horizontal" default="0.55" variable="courting_condition"></slider>
+    <slider x="262" step="0.01" y="815" max="1" width="250" display="candle_success" height="50" min="0" direction="Horizontal" default="0.8" variable="candle_success"></slider>
+    <slider x="542" step="0.0001" y="757" max="1" width="250" display="winter_elder_mort" height="50" min="0" direction="Horizontal" default="0.001" variable="winter_elder_mort"></slider>
+    <slider x="816" step="0.001" y="759" max="0.1" width="250" display="mean_foraging_gain" height="50" min="0" direction="Horizontal" default="0.06" variable="mean_foraging_gain"></slider>
+    <slider x="814" step="0.001" y="813" max="0.1" width="250" display="sd_foraging_gain" height="50" min="0" direction="Horizontal" default="0.008" variable="sd_foraging_gain"></slider>
+    <slider x="1071" step="0.001" y="758" max="0.1" width="250" display="mean_metabolic_loss" height="50" min="0" direction="Horizontal" default="0.06" variable="mean_metabolic_loss"></slider>
+    <slider x="1072" step="0.001" y="813" max="0.1" width="250" display="sd_metabolic_loss" height="50" min="0" direction="Horizontal" default="0.006" variable="sd_metabolic_loss"></slider>
+    <slider x="1328" step="0.001" y="758" max="1" width="250" display="mean_breeding_prep" height="50" min="0" direction="Horizontal" default="0.085" variable="mean_breeding_prep"></slider>
+    <slider x="1327" step="0.001" y="814" max="1" width="250" display="sd_breeding_prep" height="50" min="0" direction="Horizontal" default="0.03" variable="sd_breeding_prep"></slider>
+    <slider x="542" step="0.0001" y="815" max="1" width="250" display="chick_health" height="50" min="0" direction="Horizontal" default="0.0025" variable="chick_health"></slider>
+    <note x="850" y="711" backgroundDark="0" fontSize="12" width="150" markdown="false" height="24" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">74% survival</note>
+    <note x="1010" y="711" backgroundDark="0" fontSize="12" width="150" markdown="false" height="24" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">90% survival</note>
+    <note x="1157" y="711" backgroundDark="0" fontSize="12" width="150" markdown="false" height="24" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">89% survival</note>
+    <note x="841" y="693" backgroundDark="0" fontSize="12" width="231" markdown="false" height="24" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">annual survival rates should sit at:</note>
+    <monitor x="843" precision="2" y="630" height="60" fontSize="11" width="153" display="annual juvenile survival">juvenile_success / fledged</monitor>
+    <monitor x="1001" precision="2" y="629" height="60" fontSize="11" width="100">immature_success / juvenile_success</monitor>
+    <note x="0" y="890" backgroundDark="0" fontSize="12" width="150" markdown="false" height="24" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Storms:</note>
+    <slider x="256" step="0.01" y="911" max="1" width="250" display="nest_risk_thresh_small" height="50" min="0" direction="Horizontal" default="0.5" variable="nest_risk_thresh_small"></slider>
+    <slider x="256" step="0.01" y="967" max="1" width="250" display="nest_risk_thresh_large" height="50" min="0" direction="Horizontal" default="0.6" variable="nest_risk_thresh_large"></slider>
+    <slider x="255" step="0.01" y="1023" max="1" width="250" display="nest_risk_thresh_extreme" height="50" min="0" direction="Horizontal" default="0.95" variable="nest_risk_thresh_extreme"></slider>
+    <slider x="513" step="0.01" y="1023" max="1" width="250" display="nest_loss_extreme" height="50" min="0" direction="Horizontal" default="0.5" variable="nest_loss_extreme"></slider>
+    <slider x="512" step="0.01" y="967" max="1" width="250" display="nest_loss_large" height="50" min="0" direction="Horizontal" default="0.2" variable="nest_loss_large"></slider>
+    <slider x="512" step="0.01" y="912" max="1" width="250" display="nest_loss_small" height="50" min="0" direction="Horizontal" default="0.15" variable="nest_loss_small"></slider>
+    <slider x="255" step="0.001" y="1079" max="1" width="250" display="juv_cond_loss" height="50" min="0" direction="Horizontal" default="0.11" variable="juv_cond_loss"></slider>
+    <slider x="0" step="0.001" y="1080" max="1" width="250" display="extreme_cond_loss" height="50" min="0" direction="Horizontal" default="0.01" variable="extreme_cond_loss"></slider>
+    <slider x="0" step="0.001" y="1023" max="1" width="250" display="large_cond_loss" height="50" min="0" direction="Horizontal" default="0.006" variable="large_cond_loss"></slider>
+    <slider x="0" step="0.001" y="968" max="1" width="250" display="small_cond_loss" height="50" min="0" direction="Horizontal" default="0.003" variable="small_cond_loss"></slider>
+    <slider x="0" step="0.001" y="911" max="1" width="250" display="storm_prob" height="50" min="0" direction="Horizontal" default="0.03" variable="storm_prob"></slider>
+    <note x="770" y="891" backgroundDark="0" fontSize="12" width="150" markdown="false" height="24" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Predation:</note>
+    <slider x="769" step="0.001" y="911" max="1" width="250" display="avian_predator_prob" height="50" min="0" direction="Horizontal" default="0.016" variable="avian_predator_prob"></slider>
+    <slider x="1026" step="0.001" y="910" max="1" width="250" display="mam_predator_prob" height="50" min="0" direction="Horizontal" default="0.018" variable="mam_predator_prob"></slider>
+    <monitor x="741" precision="2" y="2" height="60" fontSize="11" width="100" display="Fledge rate">fledged / hatched</monitor>
+    <monitor x="620" precision="2" y="2" height="60" fontSize="11" width="109" display="Fertile hatch rate">hatched / fertile_eggs</monitor>
+    <monitor x="497" precision="17" y="0" height="60" fontSize="11" width="108" display="living population">total_birds</monitor>
+    <monitor x="382" precision="17" y="0" height="60" fontSize="11" width="100">year</monitor>
+    <monitor x="149" precision="17" y="0" height="60" fontSize="11" width="100" sizeVersion="0">season</monitor>
+    <monitor x="264" precision="17" y="0" height="60" fontSize="11" width="100">day</monitor>
+    <monitor x="850" precision="17" y="3" height="60" fontSize="11" width="100">clutch1_total</monitor>
+    <plot x="967" autoPlotX="true" yMax="10.0" autoPlotY="true" y="4" xMin="0.0" height="270" legend="true" xMax="10.0" yMin="0.0" width="347" display="population_structure">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="adult" color="-13345367" legend="true">
+        <setup></setup>
+        <update></update>
+      </pen>
+      <pen interval="1.0" mode="0" display="immature" color="-13840069" legend="true">
+        <setup></setup>
+        <update></update>
+      </pen>
+      <pen interval="1.0" mode="0" display="juvenile" color="-8630108" legend="true">
+        <setup></setup>
+        <update></update>
+      </pen>
+      <pen interval="1.0" mode="0" display="chick" color="-5825686" legend="true">
+        <setup></setup>
+        <update></update>
+      </pen>
+    </plot>
+    <plot x="1322" autoPlotX="true" yMax="10.0" autoPlotY="true" y="4" xMin="0.0" height="270" legend="true" xMax="10.0" yMin="0.0" width="345" display="breeding_population">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="all_adults" color="-13345367" legend="true">
+        <setup></setup>
+        <update></update>
+      </pen>
+      <pen interval="1.0" mode="0" display="breeding_adults" color="-2064490" legend="true">
+        <setup></setup>
+        <update></update>
+      </pen>
+    </plot>
+    <note x="1673" y="4" backgroundDark="0" fontSize="12" width="150" markdown="false" height="24" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Egg failure rates </note>
+    <monitor x="1675" precision="2" y="34" height="60" fontSize="11" width="100">failed_to_hatch / total_eggs</monitor>
+    <monitor x="1676" precision="2" y="102" height="60" fontSize="11" width="131" display="storm egg loss rate">storm_egg_loss / total_eggs</monitor>
+    <monitor x="1780" precision="2" y="33" height="60" fontSize="11" width="100" display="Infertile egg rate">infertile_eggs / total_eggs</monitor>
+    <monitor x="1677" precision="2" y="167" height="60" fontSize="11" width="100">abandoned_eggs / total_eggs</monitor>
+    <plot x="969" autoPlotX="true" yMax="10.0" autoPlotY="true" y="278" xMin="0.0" height="270" legend="true" xMax="10.0" yMin="0.0" width="347" display="sex_ratio">
+      <setup></setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="males" color="-955883" legend="true">
+        <setup></setup>
+        <update></update>
+      </pen>
+      <pen interval="1.0" mode="0" display="females" color="-8630108" legend="true">
+        <setup></setup>
+        <update></update>
+      </pen>
+    </plot>
+    <plot x="1322" autoPlotX="false" yMax="500.0" autoPlotY="true" yAxis="turtles" y="278" xMin="0.0" height="270" legend="false" xMax="30.0" yMin="0.0" width="344" xAxis="age " display="age_structure">
+      <setup>set-plot-x-range 0 25
+set-plot-y-range 0 count turtles 
+set-histogram-num-bars 25</setup>
+      <update></update>
+      <pen interval="1.0" mode="0" display="0" color="-13791810" legend="true">
+        <setup></setup>
+        <update>histogram [age_years] of turtles</update>
+      </pen>
+    </plot>
+    <monitor x="852" precision="17" y="74" height="60" fontSize="11" width="100">clutch2_total</monitor>
+    <monitor x="852" precision="17" y="146" height="60" fontSize="11" width="100">clutch3_total</monitor>
+    <monitor x="852" precision="17" y="217" height="60" fontSize="11" width="100" display="Annual storms">storms_per_season</monitor>
+    <monitor x="853" precision="17" y="287" height="60" fontSize="11" width="100" display="Avian predator?">avian_predator_active?</monitor>
+    <monitor x="852" precision="17" y="358" height="60" fontSize="11" width="100" display="Mam predator?">mam_predator_active?</monitor>
+    <note x="1675" y="262" backgroundDark="0" fontSize="12" width="150" markdown="false" height="24" textColorDark="-1" textColorLight="-16777216" backgroundLight="0">Chick failure rates</note>
+    <monitor x="1676" precision="2" y="293" height="60" fontSize="11" width="152" display="storm chick loss ">storm_chick_loss / hatched</monitor>
+    <monitor x="1677" precision="2" y="357" height="60" fontSize="11" width="151" display="Abandoned chick loss">(abandoned_chicks - storm_chick_loss) / hatched</monitor>
+    <monitor x="1680" precision="2" y="424" height="60" fontSize="11" width="161" display="Avian predation chick loss ">chick_loss_avian / hatched</monitor>
+    <monitor x="1675" precision="2" y="543" height="60" fontSize="11" width="158" display="Disease chick loss ">diseased_chicks / hatched</monitor>
+    <monitor x="1681" precision="2" y="486" height="60" fontSize="11" width="163" display="Mam predation chick loss">chick_loss_mammals / hatched</monitor>
+    <monitor x="1138" precision="17" y="631" height="60" fontSize="11" width="100">annual_adult_survival</monitor>
+    <slider x="1285" step="0.01" y="911" max="1" width="250" display="sibling_attack" height="50" min="0" direction="Horizontal" default="0.75" variable="sibling_attack"></slider>
+    <slider x="771" step="0.1" y="967" max="2" width="250" display="gull_egg_take" height="50" min="1" direction="Horizontal" default="1.0" variable="gull_egg_take"></slider>
+    <slider x="770" step="0.1" y="1024" max="2" width="250" display="kahu_egg_take" height="50" min="1" direction="Horizontal" default="1.5" variable="kahu_egg_take"></slider>
+    <slider x="770" step="0.1" y="1080" max="2" width="250" display="shorebird_egg_take" height="50" min="1" direction="Horizontal" default="2.0" variable="shorebird_egg_take"></slider>
+    <slider x="771" step="0.1" y="1136" max="2" width="250" display="gull_chick_take" height="50" min="1" direction="Horizontal" default="1.0" variable="gull_chick_take"></slider>
+    <slider x="772" step="0.1" y="1191" max="2" width="250" display="kahu_chick_take" height="50" min="1" direction="Horizontal" default="1.5" variable="kahu_chick_take"></slider>
+    <slider x="774" step="0.1" y="1246" max="2" width="250" display="shorebird_chick_take" height="50" min="1" direction="Horizontal" default="1.0" variable="shorebird_chick_take"></slider>
+    <slider x="1026" step="0.1" y="965" max="2" width="250" display="rat_egg_take" height="50" min="1" direction="Horizontal" default="1.3" variable="rat_egg_take"></slider>
+    <slider x="1026" step="0.1" y="1024" max="2" width="250" display="cat_egg_take" height="50" min="1" direction="Horizontal" default="1.5" variable="cat_egg_take"></slider>
+    <slider x="1026" step="0.1" y="1080" max="2" width="250" display="other_egg_take" height="50" min="1" direction="Horizontal" default="2.0" variable="other_egg_take"></slider>
+    <slider x="1026" step="0.1" y="1135" max="2" width="250" display="rat_chick_take" height="50" min="1" direction="Horizontal" default="1.3" variable="rat_chick_take"></slider>
+    <slider x="1026" step="0.1" y="1192" max="2" width="250" display="cat_chick_take" height="50" min="1" direction="Horizontal" default="1.5" variable="cat_chick_take"></slider>
+    <slider x="1030" step="0.1" y="1248" max="2" width="250" display="other_chick_take" height="50" min="1" direction="Horizontal" default="2.0" variable="other_chick_take"></slider>
+  </widgets>
+  <info>## WHAT IS IT?
+
+(a general understanding of what the model is trying to show or explain)
+
+## HOW IT WORKS
+
+(what rules the agents use to create the overall behavior of the model)
+
+## HOW TO USE IT
+
+(how to use the model, including a description of each of the items in the Interface tab)
+
+## THINGS TO NOTICE
+
+(suggested things for the user to notice while running the model)
+
+## THINGS TO TRY
+
+(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+
+## EXTENDING THE MODEL
+
+(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+
+## NETLOGO FEATURES
+
+(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+
+## RELATED MODELS
+
+(models in the NetLogo Models Library and elsewhere which are of related interest)
+
+## CREDITS AND REFERENCES
+
+(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+</info>
+  <turtleShapes>
+    <shape name="default" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="5"></point>
+        <point x="40" y="250"></point>
+        <point x="150" y="205"></point>
+        <point x="260" y="250"></point>
+      </polygon>
+    </shape>
+    <shape name="airplane" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="0"></point>
+        <point x="135" y="15"></point>
+        <point x="120" y="60"></point>
+        <point x="120" y="105"></point>
+        <point x="15" y="165"></point>
+        <point x="15" y="195"></point>
+        <point x="120" y="180"></point>
+        <point x="135" y="240"></point>
+        <point x="105" y="270"></point>
+        <point x="120" y="285"></point>
+        <point x="150" y="270"></point>
+        <point x="180" y="285"></point>
+        <point x="210" y="270"></point>
+        <point x="165" y="240"></point>
+        <point x="180" y="180"></point>
+        <point x="285" y="195"></point>
+        <point x="285" y="165"></point>
+        <point x="180" y="105"></point>
+        <point x="180" y="60"></point>
+        <point x="165" y="15"></point>
+      </polygon>
+    </shape>
+    <shape name="arrow" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="0"></point>
+        <point x="0" y="150"></point>
+        <point x="105" y="150"></point>
+        <point x="105" y="293"></point>
+        <point x="195" y="293"></point>
+        <point x="195" y="150"></point>
+        <point x="300" y="150"></point>
+      </polygon>
+    </shape>
+    <shape name="box" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="285"></point>
+        <point x="285" y="225"></point>
+        <point x="285" y="75"></point>
+        <point x="150" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="135"></point>
+        <point x="15" y="75"></point>
+        <point x="150" y="15"></point>
+        <point x="285" y="75"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="15" y="75"></point>
+        <point x="15" y="225"></point>
+        <point x="150" y="285"></point>
+        <point x="150" y="135"></point>
+      </polygon>
+      <line endX="150" startY="285" marked="false" color="255" endY="135" startX="150"></line>
+      <line endX="15" startY="135" marked="false" color="255" endY="75" startX="150"></line>
+      <line endX="285" startY="135" marked="false" color="255" endY="75" startX="150"></line>
+    </shape>
+    <shape name="bug" rotatable="true" editableColorIndex="0">
+      <circle x="96" y="182" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="110" y="127" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <circle x="110" y="75" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <line endX="80" startY="100" marked="true" color="-1920102913" endY="30" startX="150"></line>
+      <line endX="220" startY="100" marked="true" color="-1920102913" endY="30" startX="150"></line>
+    </shape>
+    <shape name="butterfly" rotatable="true" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="165"></point>
+        <point x="209" y="199"></point>
+        <point x="225" y="225"></point>
+        <point x="225" y="255"></point>
+        <point x="195" y="270"></point>
+        <point x="165" y="255"></point>
+        <point x="150" y="240"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="165"></point>
+        <point x="89" y="198"></point>
+        <point x="75" y="225"></point>
+        <point x="75" y="255"></point>
+        <point x="105" y="270"></point>
+        <point x="135" y="255"></point>
+        <point x="150" y="240"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="139" y="148"></point>
+        <point x="100" y="105"></point>
+        <point x="55" y="90"></point>
+        <point x="25" y="90"></point>
+        <point x="10" y="105"></point>
+        <point x="10" y="135"></point>
+        <point x="25" y="180"></point>
+        <point x="40" y="195"></point>
+        <point x="85" y="194"></point>
+        <point x="139" y="163"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="162" y="150"></point>
+        <point x="200" y="105"></point>
+        <point x="245" y="90"></point>
+        <point x="275" y="90"></point>
+        <point x="290" y="105"></point>
+        <point x="290" y="135"></point>
+        <point x="275" y="180"></point>
+        <point x="260" y="195"></point>
+        <point x="215" y="195"></point>
+        <point x="162" y="165"></point>
+      </polygon>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="255"></point>
+        <point x="135" y="225"></point>
+        <point x="120" y="150"></point>
+        <point x="135" y="120"></point>
+        <point x="150" y="105"></point>
+        <point x="165" y="120"></point>
+        <point x="180" y="150"></point>
+        <point x="165" y="225"></point>
+      </polygon>
+      <circle x="135" y="90" marked="false" color="255" diameter="30" filled="true"></circle>
+      <line endX="195" startY="105" marked="false" color="255" endY="60" startX="150"></line>
+      <line endX="105" startY="105" marked="false" color="255" endY="60" startX="150"></line>
+    </shape>
+    <shape name="car" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="300" y="180"></point>
+        <point x="279" y="164"></point>
+        <point x="261" y="144"></point>
+        <point x="240" y="135"></point>
+        <point x="226" y="132"></point>
+        <point x="213" y="106"></point>
+        <point x="203" y="84"></point>
+        <point x="185" y="63"></point>
+        <point x="159" y="50"></point>
+        <point x="135" y="50"></point>
+        <point x="75" y="60"></point>
+        <point x="0" y="150"></point>
+        <point x="0" y="165"></point>
+        <point x="0" y="225"></point>
+        <point x="300" y="225"></point>
+        <point x="300" y="180"></point>
+      </polygon>
+      <circle x="180" y="180" marked="false" color="255" diameter="90" filled="true"></circle>
+      <circle x="30" y="180" marked="false" color="255" diameter="90" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="162" y="80"></point>
+        <point x="132" y="78"></point>
+        <point x="134" y="135"></point>
+        <point x="209" y="135"></point>
+        <point x="194" y="105"></point>
+        <point x="189" y="96"></point>
+        <point x="180" y="89"></point>
+      </polygon>
+      <circle x="47" y="195" marked="true" color="-1920102913" diameter="58" filled="true"></circle>
+      <circle x="195" y="195" marked="true" color="-1920102913" diameter="58" filled="true"></circle>
+    </shape>
+    <shape name="circle" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+    </shape>
+    <shape name="circle 2" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+    </shape>
+    <shape name="cow" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="200" y="193"></point>
+        <point x="197" y="249"></point>
+        <point x="179" y="249"></point>
+        <point x="177" y="196"></point>
+        <point x="166" y="187"></point>
+        <point x="140" y="189"></point>
+        <point x="93" y="191"></point>
+        <point x="78" y="179"></point>
+        <point x="72" y="211"></point>
+        <point x="49" y="209"></point>
+        <point x="48" y="181"></point>
+        <point x="37" y="149"></point>
+        <point x="25" y="120"></point>
+        <point x="25" y="89"></point>
+        <point x="45" y="72"></point>
+        <point x="103" y="84"></point>
+        <point x="179" y="75"></point>
+        <point x="198" y="76"></point>
+        <point x="252" y="64"></point>
+        <point x="272" y="81"></point>
+        <point x="293" y="103"></point>
+        <point x="285" y="121"></point>
+        <point x="255" y="121"></point>
+        <point x="242" y="118"></point>
+        <point x="224" y="167"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="73" y="210"></point>
+        <point x="86" y="251"></point>
+        <point x="62" y="249"></point>
+        <point x="48" y="208"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="25" y="114"></point>
+        <point x="16" y="195"></point>
+        <point x="9" y="204"></point>
+        <point x="23" y="213"></point>
+        <point x="25" y="200"></point>
+        <point x="39" y="123"></point>
+      </polygon>
+    </shape>
+    <shape name="cylinder" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+    </shape>
+    <shape name="dot" rotatable="false" editableColorIndex="0">
+      <circle x="90" y="90" marked="true" color="-1920102913" diameter="120" filled="true"></circle>
+    </shape>
+    <shape name="face happy" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="8" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="255"></point>
+        <point x="90" y="239"></point>
+        <point x="62" y="213"></point>
+        <point x="47" y="191"></point>
+        <point x="67" y="179"></point>
+        <point x="90" y="203"></point>
+        <point x="109" y="218"></point>
+        <point x="150" y="225"></point>
+        <point x="192" y="218"></point>
+        <point x="210" y="203"></point>
+        <point x="227" y="181"></point>
+        <point x="251" y="194"></point>
+        <point x="236" y="217"></point>
+        <point x="212" y="240"></point>
+      </polygon>
+    </shape>
+    <shape name="face neutral" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="7" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <rectangle endX="240" startY="195" marked="false" color="255" endY="225" startX="60" filled="true"></rectangle>
+    </shape>
+    <shape name="face sad" rotatable="false" editableColorIndex="0">
+      <circle x="8" y="8" marked="true" color="-1920102913" diameter="285" filled="true"></circle>
+      <circle x="60" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <circle x="180" y="75" marked="false" color="255" diameter="60" filled="true"></circle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="150" y="168"></point>
+        <point x="90" y="184"></point>
+        <point x="62" y="210"></point>
+        <point x="47" y="232"></point>
+        <point x="67" y="244"></point>
+        <point x="90" y="220"></point>
+        <point x="109" y="205"></point>
+        <point x="150" y="198"></point>
+        <point x="192" y="205"></point>
+        <point x="210" y="220"></point>
+        <point x="227" y="242"></point>
+        <point x="251" y="229"></point>
+        <point x="236" y="206"></point>
+        <point x="212" y="183"></point>
+      </polygon>
+    </shape>
+    <shape name="fish" rotatable="false" editableColorIndex="0">
+      <polygon color="-1" filled="true" marked="false">
+        <point x="44" y="131"></point>
+        <point x="21" y="87"></point>
+        <point x="15" y="86"></point>
+        <point x="0" y="120"></point>
+        <point x="15" y="150"></point>
+        <point x="0" y="180"></point>
+        <point x="13" y="214"></point>
+        <point x="20" y="212"></point>
+        <point x="45" y="166"></point>
+      </polygon>
+      <polygon color="-1" filled="true" marked="false">
+        <point x="135" y="195"></point>
+        <point x="119" y="235"></point>
+        <point x="95" y="218"></point>
+        <point x="76" y="210"></point>
+        <point x="46" y="204"></point>
+        <point x="60" y="165"></point>
+      </polygon>
+      <polygon color="-1" filled="true" marked="false">
+        <point x="75" y="45"></point>
+        <point x="83" y="77"></point>
+        <point x="71" y="103"></point>
+        <point x="86" y="114"></point>
+        <point x="166" y="78"></point>
+        <point x="135" y="60"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="30" y="136"></point>
+        <point x="151" y="77"></point>
+        <point x="226" y="81"></point>
+        <point x="280" y="119"></point>
+        <point x="292" y="146"></point>
+        <point x="292" y="160"></point>
+        <point x="287" y="170"></point>
+        <point x="270" y="195"></point>
+        <point x="195" y="210"></point>
+        <point x="151" y="212"></point>
+        <point x="30" y="166"></point>
+      </polygon>
+      <circle x="215" y="106" marked="false" color="255" diameter="30" filled="true"></circle>
+    </shape>
+    <shape name="flag" rotatable="false" editableColorIndex="0">
+      <rectangle endX="75" startY="15" marked="true" color="-1920102913" endY="300" startX="60" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="90" y="150"></point>
+        <point x="270" y="90"></point>
+        <point x="90" y="30"></point>
+      </polygon>
+      <line endX="90" startY="135" marked="true" color="-1920102913" endY="135" startX="75"></line>
+      <line endX="90" startY="45" marked="true" color="-1920102913" endY="45" startX="75"></line>
+    </shape>
+    <shape name="flower" rotatable="false" editableColorIndex="0">
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="135" y="120"></point>
+        <point x="165" y="165"></point>
+        <point x="180" y="210"></point>
+        <point x="180" y="240"></point>
+        <point x="150" y="300"></point>
+        <point x="165" y="300"></point>
+        <point x="195" y="240"></point>
+        <point x="195" y="195"></point>
+        <point x="165" y="135"></point>
+      </polygon>
+      <circle x="85" y="132" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="130" y="147" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="192" y="85" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="85" y="40" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="177" y="40" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="177" y="132" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="70" y="85" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="130" y="25" marked="true" color="-1920102913" diameter="38" filled="true"></circle>
+      <circle x="96" y="51" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="113" y="68" marked="false" color="255" diameter="74" filled="true"></circle>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="189" y="233"></point>
+        <point x="219" y="188"></point>
+        <point x="249" y="173"></point>
+        <point x="279" y="188"></point>
+        <point x="234" y="218"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="180" y="255"></point>
+        <point x="150" y="210"></point>
+        <point x="105" y="210"></point>
+        <point x="75" y="240"></point>
+        <point x="135" y="240"></point>
+      </polygon>
+    </shape>
+    <shape name="house" rotatable="false" editableColorIndex="0">
+      <rectangle endX="255" startY="120" marked="true" color="-1920102913" endY="285" startX="45" filled="true"></rectangle>
+      <rectangle endX="180" startY="210" marked="false" color="255" endY="285" startX="120" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="15" y="120"></point>
+        <point x="150" y="15"></point>
+        <point x="285" y="120"></point>
+      </polygon>
+      <line endX="270" startY="120" marked="false" color="255" endY="120" startX="30"></line>
+    </shape>
+    <shape name="leaf" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="210"></point>
+        <point x="135" y="195"></point>
+        <point x="120" y="210"></point>
+        <point x="60" y="210"></point>
+        <point x="30" y="195"></point>
+        <point x="60" y="180"></point>
+        <point x="60" y="165"></point>
+        <point x="15" y="135"></point>
+        <point x="30" y="120"></point>
+        <point x="15" y="105"></point>
+        <point x="40" y="104"></point>
+        <point x="45" y="90"></point>
+        <point x="60" y="90"></point>
+        <point x="90" y="105"></point>
+        <point x="105" y="120"></point>
+        <point x="120" y="120"></point>
+        <point x="105" y="60"></point>
+        <point x="120" y="60"></point>
+        <point x="135" y="30"></point>
+        <point x="150" y="15"></point>
+        <point x="165" y="30"></point>
+        <point x="180" y="60"></point>
+        <point x="195" y="60"></point>
+        <point x="180" y="120"></point>
+        <point x="195" y="120"></point>
+        <point x="210" y="105"></point>
+        <point x="240" y="90"></point>
+        <point x="255" y="90"></point>
+        <point x="263" y="104"></point>
+        <point x="285" y="105"></point>
+        <point x="270" y="120"></point>
+        <point x="285" y="135"></point>
+        <point x="240" y="165"></point>
+        <point x="240" y="180"></point>
+        <point x="270" y="195"></point>
+        <point x="240" y="210"></point>
+        <point x="180" y="210"></point>
+        <point x="165" y="195"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="195"></point>
+        <point x="135" y="240"></point>
+        <point x="120" y="255"></point>
+        <point x="105" y="255"></point>
+        <point x="105" y="285"></point>
+        <point x="135" y="285"></point>
+        <point x="165" y="240"></point>
+        <point x="165" y="195"></point>
+      </polygon>
+    </shape>
+    <shape name="line" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="300" startX="150"></line>
+    </shape>
+    <shape name="line half" rotatable="true" editableColorIndex="0">
+      <line endX="150" startY="0" marked="true" color="-1920102913" endY="150" startX="150"></line>
+    </shape>
+    <shape name="pentagon" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="15"></point>
+        <point x="15" y="120"></point>
+        <point x="60" y="285"></point>
+        <point x="240" y="285"></point>
+        <point x="285" y="120"></point>
+      </polygon>
+    </shape>
+    <shape name="person" rotatable="false" editableColorIndex="0">
+      <circle x="110" y="5" marked="true" color="-1920102913" diameter="80" filled="true"></circle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="105" y="90"></point>
+        <point x="120" y="195"></point>
+        <point x="90" y="285"></point>
+        <point x="105" y="300"></point>
+        <point x="135" y="300"></point>
+        <point x="150" y="225"></point>
+        <point x="165" y="300"></point>
+        <point x="195" y="300"></point>
+        <point x="210" y="285"></point>
+        <point x="180" y="195"></point>
+        <point x="195" y="90"></point>
+      </polygon>
+      <rectangle endX="172" startY="79" marked="true" color="-1920102913" endY="94" startX="127" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="195" y="90"></point>
+        <point x="240" y="150"></point>
+        <point x="225" y="180"></point>
+        <point x="165" y="105"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="105" y="90"></point>
+        <point x="60" y="150"></point>
+        <point x="75" y="180"></point>
+        <point x="135" y="105"></point>
+      </polygon>
+    </shape>
+    <shape name="plant" rotatable="false" editableColorIndex="0">
+      <rectangle endX="165" startY="90" marked="true" color="-1920102913" endY="300" startX="135" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="255"></point>
+        <point x="90" y="210"></point>
+        <point x="45" y="195"></point>
+        <point x="75" y="255"></point>
+        <point x="135" y="285"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="255"></point>
+        <point x="210" y="210"></point>
+        <point x="255" y="195"></point>
+        <point x="225" y="255"></point>
+        <point x="165" y="285"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="180"></point>
+        <point x="90" y="135"></point>
+        <point x="45" y="120"></point>
+        <point x="75" y="180"></point>
+        <point x="135" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="180"></point>
+        <point x="165" y="210"></point>
+        <point x="225" y="180"></point>
+        <point x="255" y="120"></point>
+        <point x="210" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="105"></point>
+        <point x="90" y="60"></point>
+        <point x="45" y="45"></point>
+        <point x="75" y="105"></point>
+        <point x="135" y="135"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="165" y="105"></point>
+        <point x="165" y="135"></point>
+        <point x="225" y="105"></point>
+        <point x="255" y="45"></point>
+        <point x="210" y="60"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="135" y="90"></point>
+        <point x="120" y="45"></point>
+        <point x="150" y="15"></point>
+        <point x="180" y="45"></point>
+        <point x="165" y="90"></point>
+      </polygon>
+    </shape>
+    <shape name="sheep" rotatable="false" editableColorIndex="15">
+      <circle x="203" y="65" marked="true" color="-1" diameter="88" filled="true"></circle>
+      <circle x="70" y="65" marked="true" color="-1" diameter="162" filled="true"></circle>
+      <circle x="150" y="105" marked="true" color="-1" diameter="120" filled="true"></circle>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="218" y="120"></point>
+        <point x="240" y="165"></point>
+        <point x="255" y="165"></point>
+        <point x="278" y="120"></point>
+      </polygon>
+      <circle x="214" y="72" marked="false" color="-1920102913" diameter="67" filled="true"></circle>
+      <rectangle endX="179" startY="223" marked="true" color="-1" endY="298" startX="164" filled="true"></rectangle>
+      <polygon color="-1" filled="true" marked="true">
+        <point x="45" y="285"></point>
+        <point x="30" y="285"></point>
+        <point x="30" y="240"></point>
+        <point x="15" y="195"></point>
+        <point x="45" y="210"></point>
+      </polygon>
+      <circle x="3" y="83" marked="true" color="-1" diameter="150" filled="true"></circle>
+      <rectangle endX="80" startY="221" marked="true" color="-1" endY="296" startX="65" filled="true"></rectangle>
+      <polygon color="-1" filled="true" marked="true">
+        <point x="195" y="285"></point>
+        <point x="210" y="285"></point>
+        <point x="210" y="240"></point>
+        <point x="240" y="210"></point>
+        <point x="195" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="276" y="85"></point>
+        <point x="285" y="105"></point>
+        <point x="302" y="99"></point>
+        <point x="294" y="83"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="false">
+        <point x="219" y="85"></point>
+        <point x="210" y="105"></point>
+        <point x="193" y="99"></point>
+        <point x="201" y="83"></point>
+      </polygon>
+    </shape>
+    <shape name="square" rotatable="false" editableColorIndex="0">
+      <rectangle endX="270" startY="30" marked="true" color="-1920102913" endY="270" startX="30" filled="true"></rectangle>
+    </shape>
+    <shape name="square 2" rotatable="false" editableColorIndex="0">
+      <rectangle endX="270" startY="30" marked="true" color="-1920102913" endY="270" startX="30" filled="true"></rectangle>
+      <rectangle endX="240" startY="60" marked="false" color="255" endY="240" startX="60" filled="true"></rectangle>
+    </shape>
+    <shape name="star" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="151" y="1"></point>
+        <point x="185" y="108"></point>
+        <point x="298" y="108"></point>
+        <point x="207" y="175"></point>
+        <point x="242" y="282"></point>
+        <point x="151" y="216"></point>
+        <point x="59" y="282"></point>
+        <point x="94" y="175"></point>
+        <point x="3" y="108"></point>
+        <point x="116" y="108"></point>
+      </polygon>
+    </shape>
+    <shape name="target" rotatable="false" editableColorIndex="0">
+      <circle x="0" y="0" marked="true" color="-1920102913" diameter="300" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+      <circle x="60" y="60" marked="true" color="-1920102913" diameter="180" filled="true"></circle>
+      <circle x="90" y="90" marked="false" color="255" diameter="120" filled="true"></circle>
+      <circle x="120" y="120" marked="true" color="-1920102913" diameter="60" filled="true"></circle>
+    </shape>
+    <shape name="tree" rotatable="false" editableColorIndex="0">
+      <circle x="118" y="3" marked="true" color="-1920102913" diameter="94" filled="true"></circle>
+      <rectangle endX="180" startY="195" marked="false" color="-1653716737" endY="300" startX="120" filled="true"></rectangle>
+      <circle x="65" y="21" marked="true" color="-1920102913" diameter="108" filled="true"></circle>
+      <circle x="116" y="41" marked="true" color="-1920102913" diameter="127" filled="true"></circle>
+      <circle x="45" y="90" marked="true" color="-1920102913" diameter="120" filled="true"></circle>
+      <circle x="104" y="74" marked="true" color="-1920102913" diameter="152" filled="true"></circle>
+    </shape>
+    <shape name="triangle" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="30"></point>
+        <point x="15" y="255"></point>
+        <point x="285" y="255"></point>
+      </polygon>
+    </shape>
+    <shape name="triangle 2" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="150" y="30"></point>
+        <point x="15" y="255"></point>
+        <point x="285" y="255"></point>
+      </polygon>
+      <polygon color="255" filled="true" marked="false">
+        <point x="151" y="99"></point>
+        <point x="225" y="223"></point>
+        <point x="75" y="224"></point>
+      </polygon>
+    </shape>
+    <shape name="truck" rotatable="false" editableColorIndex="0">
+      <rectangle endX="195" startY="45" marked="true" color="-1920102913" endY="187" startX="4" filled="true"></rectangle>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="296" y="193"></point>
+        <point x="296" y="150"></point>
+        <point x="259" y="134"></point>
+        <point x="244" y="104"></point>
+        <point x="208" y="104"></point>
+        <point x="207" y="194"></point>
+      </polygon>
+      <rectangle endX="195" startY="60" marked="false" color="-1" endY="105" startX="195" filled="true"></rectangle>
+      <polygon color="255" filled="true" marked="false">
+        <point x="238" y="112"></point>
+        <point x="252" y="141"></point>
+        <point x="219" y="141"></point>
+        <point x="218" y="112"></point>
+      </polygon>
+      <circle x="234" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <rectangle endX="214" startY="185" marked="true" color="-1920102913" endY="194" startX="181" filled="true"></rectangle>
+      <circle x="144" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <circle x="24" y="174" marked="false" color="255" diameter="42" filled="true"></circle>
+      <circle x="24" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+      <circle x="144" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+      <circle x="234" y="174" marked="true" color="-1920102913" diameter="42" filled="false"></circle>
+    </shape>
+    <shape name="turtle" rotatable="true" editableColorIndex="0">
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="215" y="204"></point>
+        <point x="240" y="233"></point>
+        <point x="246" y="254"></point>
+        <point x="228" y="266"></point>
+        <point x="215" y="252"></point>
+        <point x="193" y="210"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="195" y="90"></point>
+        <point x="225" y="75"></point>
+        <point x="245" y="75"></point>
+        <point x="260" y="89"></point>
+        <point x="269" y="108"></point>
+        <point x="261" y="124"></point>
+        <point x="240" y="105"></point>
+        <point x="225" y="105"></point>
+        <point x="210" y="105"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="105" y="90"></point>
+        <point x="75" y="75"></point>
+        <point x="55" y="75"></point>
+        <point x="40" y="89"></point>
+        <point x="31" y="108"></point>
+        <point x="39" y="124"></point>
+        <point x="60" y="105"></point>
+        <point x="75" y="105"></point>
+        <point x="90" y="105"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="132" y="85"></point>
+        <point x="134" y="64"></point>
+        <point x="107" y="51"></point>
+        <point x="108" y="17"></point>
+        <point x="150" y="2"></point>
+        <point x="192" y="18"></point>
+        <point x="192" y="52"></point>
+        <point x="169" y="65"></point>
+        <point x="172" y="87"></point>
+      </polygon>
+      <polygon color="1504722175" filled="true" marked="false">
+        <point x="85" y="204"></point>
+        <point x="60" y="233"></point>
+        <point x="54" y="254"></point>
+        <point x="72" y="266"></point>
+        <point x="85" y="252"></point>
+        <point x="107" y="210"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="119" y="75"></point>
+        <point x="179" y="75"></point>
+        <point x="209" y="101"></point>
+        <point x="224" y="135"></point>
+        <point x="220" y="225"></point>
+        <point x="175" y="261"></point>
+        <point x="128" y="261"></point>
+        <point x="81" y="224"></point>
+        <point x="74" y="135"></point>
+        <point x="88" y="99"></point>
+      </polygon>
+    </shape>
+    <shape name="wheel" rotatable="false" editableColorIndex="0">
+      <circle x="3" y="3" marked="true" color="-1920102913" diameter="294" filled="true"></circle>
+      <circle x="30" y="30" marked="false" color="255" diameter="240" filled="true"></circle>
+      <line endX="150" startY="285" marked="true" color="-1920102913" endY="15" startX="150"></line>
+      <line endX="285" startY="150" marked="true" color="-1920102913" endY="150" startX="15"></line>
+      <circle x="120" y="120" marked="true" color="-1920102913" diameter="60" filled="true"></circle>
+      <line endX="79" startY="40" marked="true" color="-1920102913" endY="269" startX="216"></line>
+      <line endX="269" startY="84" marked="true" color="-1920102913" endY="221" startX="40"></line>
+      <line endX="269" startY="216" marked="true" color="-1920102913" endY="79" startX="40"></line>
+      <line endX="221" startY="40" marked="true" color="-1920102913" endY="269" startX="84"></line>
+    </shape>
+    <shape name="wolf" rotatable="false" editableColorIndex="0">
+      <polygon color="255" filled="true" marked="false">
+        <point x="253" y="133"></point>
+        <point x="245" y="131"></point>
+        <point x="245" y="133"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="2" y="194"></point>
+        <point x="13" y="197"></point>
+        <point x="30" y="191"></point>
+        <point x="38" y="193"></point>
+        <point x="38" y="205"></point>
+        <point x="20" y="226"></point>
+        <point x="20" y="257"></point>
+        <point x="27" y="265"></point>
+        <point x="38" y="266"></point>
+        <point x="40" y="260"></point>
+        <point x="31" y="253"></point>
+        <point x="31" y="230"></point>
+        <point x="60" y="206"></point>
+        <point x="68" y="198"></point>
+        <point x="75" y="209"></point>
+        <point x="66" y="228"></point>
+        <point x="65" y="243"></point>
+        <point x="82" y="261"></point>
+        <point x="84" y="268"></point>
+        <point x="100" y="267"></point>
+        <point x="103" y="261"></point>
+        <point x="77" y="239"></point>
+        <point x="79" y="231"></point>
+        <point x="100" y="207"></point>
+        <point x="98" y="196"></point>
+        <point x="119" y="201"></point>
+        <point x="143" y="202"></point>
+        <point x="160" y="195"></point>
+        <point x="166" y="210"></point>
+        <point x="172" y="213"></point>
+        <point x="173" y="238"></point>
+        <point x="167" y="251"></point>
+        <point x="160" y="248"></point>
+        <point x="154" y="265"></point>
+        <point x="169" y="264"></point>
+        <point x="178" y="247"></point>
+        <point x="186" y="240"></point>
+        <point x="198" y="260"></point>
+        <point x="200" y="271"></point>
+        <point x="217" y="271"></point>
+        <point x="219" y="262"></point>
+        <point x="207" y="258"></point>
+        <point x="195" y="230"></point>
+        <point x="192" y="198"></point>
+        <point x="210" y="184"></point>
+        <point x="227" y="164"></point>
+        <point x="242" y="144"></point>
+        <point x="259" y="145"></point>
+        <point x="284" y="151"></point>
+        <point x="277" y="141"></point>
+        <point x="293" y="140"></point>
+        <point x="299" y="134"></point>
+        <point x="297" y="127"></point>
+        <point x="273" y="119"></point>
+        <point x="270" y="105"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="-1" y="195"></point>
+        <point x="14" y="180"></point>
+        <point x="36" y="166"></point>
+        <point x="40" y="153"></point>
+        <point x="53" y="140"></point>
+        <point x="82" y="131"></point>
+        <point x="134" y="133"></point>
+        <point x="159" y="126"></point>
+        <point x="188" y="115"></point>
+        <point x="227" y="108"></point>
+        <point x="236" y="102"></point>
+        <point x="238" y="98"></point>
+        <point x="268" y="86"></point>
+        <point x="269" y="92"></point>
+        <point x="281" y="87"></point>
+        <point x="269" y="103"></point>
+        <point x="269" y="113"></point>
+      </polygon>
+    </shape>
+    <shape name="x" rotatable="false" editableColorIndex="0">
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="270" y="75"></point>
+        <point x="225" y="30"></point>
+        <point x="30" y="225"></point>
+        <point x="75" y="270"></point>
+      </polygon>
+      <polygon color="-1920102913" filled="true" marked="true">
+        <point x="30" y="75"></point>
+        <point x="75" y="30"></point>
+        <point x="270" y="225"></point>
+        <point x="225" y="270"></point>
+      </polygon>
+    </shape>
+  </turtleShapes>
+  <linkShapes>
+    <shape name="default" curviness="0.0">
+      <lines>
+        <line x="-0.2" visible="false">
+          <dash value="0.0"></dash>
+          <dash value="1.0"></dash>
+        </line>
+        <line x="0.0" visible="true">
+          <dash value="1.0"></dash>
+          <dash value="0.0"></dash>
+        </line>
+        <line x="0.2" visible="false">
+          <dash value="0.0"></dash>
+          <dash value="1.0"></dash>
+        </line>
+      </lines>
+      <indicator>
+        <shape name="link direction" rotatable="true" editableColorIndex="0">
+          <line endX="90" startY="150" marked="true" color="-1920102913" endY="180" startX="150"></line>
+          <line endX="210" startY="150" marked="true" color="-1920102913" endY="180" startX="150"></line>
+        </shape>
+      </indicator>
+    </shape>
+  </linkShapes>
+  <previewCommands>setup repeat 75 [ go ]</previewCommands>
+</model>
