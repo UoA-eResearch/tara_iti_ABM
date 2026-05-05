@@ -30,11 +30,12 @@ tara_iti_ABM/
 │       └── captures_morphometrics_data_1990_2025.csv  # Individual capture and morphometric records
 └── .github/
     ├── workflows/
-    │   └── run-model.yml              # CI workflow: headless run + ABC calibration
+    │   └── run-model.yml              # CI workflow: ABC calibration + 50-year simulation + commit
     ├── experiments/
     │   └── default.xml                # Reference BehaviorSpace experiment (NetLogo 7 format)
     └── abc/
-        └── abc_runner.py              # ABC rejection-sampling calibration script
+        ├── abc_runner.py              # ABC rejection-sampling calibration script
+        └── set_best_params.py         # Injects best-fit ABC parameters into model; sets 50-year run
 ```
 
 ## Model Description
@@ -133,11 +134,13 @@ NetLogo can be run without a GUI using the bundled `netlogo-headless.sh` script.
 
 ## Continuous Integration
 
-Every push and pull request triggers the `.github/workflows/run-model.yml` workflow, which:
+Every push and pull request triggers the `.github/workflows/run-model.yml` workflow, which runs the full calibration-to-simulation pipeline:
 
 1. **Installs Java 21** (Temurin) and **downloads NetLogo 7.0.4** (cached between runs).
-2. **Runs a 365-tick headless simulation** using the embedded `default` BehaviorSpace experiment and uploads `results.csv` as the `simulation-results` artifact.
-3. **Runs ABC calibration** (see below) and uploads `abc_all.csv` and `abc_accepted.csv` as the `abc-results` artifact.
+2. **Runs ABC calibration** — draws 300 Latin-Hypercube-sampled parameter sets, simulates each for 365 ticks, and ranks them by distance from observed field data. Uploads `abc_all.csv` and `abc_accepted.csv` as the `abc-results` artifact.
+3. **Applies best-fit parameters** — `set_best_params.py` reads the top-ranked row from `abc_all.csv`, patches the `<experiments>` block in `breeding_storm_predation2.nlogox` with the 49 calibrated parameter values and a 50-year time limit (18 250 ticks), and writes `best_params.csv`.
+4. **Runs a 50-year headless simulation** using the updated `default` BehaviorSpace experiment and uploads `results.csv` and `best_params.csv` as the `simulation-results` artifact.
+5. **Commits the updated model file** back to the repository (push events only; skipped on pull requests). The commit message includes `[skip ci]` to prevent a re-trigger loop.
 
 ## ABC Parameter Calibration
 
@@ -205,6 +208,45 @@ ABC_SEED=123 \
 | `abc_accepted.csv` | Accepted runs only (top `ACCEPT_FRACTION` by distance) — the approximate posterior |
 
 The posterior parameter ranges printed to stdout identify which combinations of parameters are most consistent with observed breeding outcomes.
+
+## Post-ABC 50-Year Simulation
+
+After ABC completes, `set_best_params.py` automates the step of applying the calibrated parameters to the model and running a long-term projection.
+
+### What it does
+
+1. Reads `abc_all.csv` (sorted ascending by distance) and picks the first row — the best-fit parameter set.
+2. Patches the `<experiments>` block inside `breeding_storm_predation2.nlogox` in-place, setting:
+   - all 49 calibrated parameter values as `<enumeratedValueSet>` constants,
+   - `initial_number = 50` (fixed, not calibrated by ABC),
+   - `timeLimit = 18250` (50 years × 365 ticks).
+3. Writes `best_params.csv` (two-column: `parameter`, `value`) for traceability.
+
+The updated model file is then run headlessly for the full 50 years and the modified `.nlogox` is committed back to the repository so the BehaviorSpace experiment always reflects the latest best-fit calibration.
+
+### Running manually
+
+```bash
+# Defaults: MODEL_FILE=breeding_storm_predation2.nlogox, ABC_ALL_CSV=abc_all.csv
+python3 .github/abc/set_best_params.py
+
+# Custom paths
+MODEL_FILE=path/to/model.nlogox \
+ABC_ALL_CSV=path/to/abc_all.csv \
+  python3 .github/abc/set_best_params.py
+```
+
+| Variable | Default | Description |
+|---|---|---|
+| `MODEL_FILE` | `breeding_storm_predation2.nlogox` | Path to the `.nlogox` model file to patch |
+| `ABC_ALL_CSV` | `abc_all.csv` | Path to the ABC output (row 0 must be the best-fit run) |
+
+### Output files
+
+| File | Contents |
+|---|---|
+| `best_params.csv` | Best-fit parameter set written by `set_best_params.py` (50 rows: parameter name + value) |
+| `results.csv` | 50-year simulation output: one row with final `total_birds`, `fledged`, `total_eggs` |
 
 ## Data
 
