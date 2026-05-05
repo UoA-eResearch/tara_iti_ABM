@@ -129,7 +129,7 @@ NetLogo can be run without a GUI using the bundled `netlogo-headless.sh` script.
   --table results.csv
 ```
 
-`results.csv` will contain one row per tick with columns `total_birds`, `fledged`, and `total_eggs`.
+`results.csv` will contain one row per run (final metrics only, since `runMetricsEveryStep="false"`) with columns `total_birds`, `fledged`, and `total_eggs`.
 
 ## Continuous Integration
 
