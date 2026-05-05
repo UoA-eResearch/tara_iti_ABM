@@ -1,0 +1,49 @@
+name: Run NetLogo model
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  run-model:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Cache NetLogo installation
+        id: cache-netlogo
+        uses: actions/cache@v4
+        with:
+          path: NetLogo-7.0.4-64
+          key: netlogo-7.0.4-linux-64
+
+      - name: Download and extract NetLogo 7.0.4
+        if: steps.cache-netlogo.outputs.cache-hit != 'true'
+        run: |
+          curl -fsSL -o netlogo.tgz \
+            https://github.com/NetLogo/NetLogo/releases/download/v7.0.4/NetLogo-7.0.4-64.tgz
+          tar -xzf netlogo.tgz
+          rm netlogo.tgz
+
+      - name: Run breeding_storm_predation2.nlogox (headless)
+        run: |
+          ./NetLogo-7.0.4-64/netlogo-headless.sh \
+            --model breeding_storm_predation2.nlogox \
+            --setup-file .github/experiments/default.xml \
+            --experiment default \
+            --table results.csv
+
+      - name: Upload simulation results
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulation-results
+          path: results.csv
