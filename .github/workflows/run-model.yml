@@ -35,6 +35,9 @@ jobs:
             https://github.com/NetLogo/NetLogo/releases/download/v7.0.4/NetLogo-7.0.4-64.tgz
           tar -xzf netlogo.tgz
           rm netlogo.tgz
+          # Rename whatever directory was extracted to a predictable path
+          NETLOGO_DIR=$(find . -maxdepth 1 -type d -name "NetLogo*" | head -1)
+          mv "$NETLOGO_DIR" NetLogo-7.0.4-64
 
       - name: Run breeding_storm_predation2.nlogox (headless)
         run: |
