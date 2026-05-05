@@ -3,7 +3,15 @@ name: Run NetLogo model
 on:
   push:
     branches: ["**"]
+    paths:
+      - "breeding_storm_predation2.nlogox"
+      - ".github/workflows/run-model.yml"
+      - ".github/abc/abc_runner.py"
   pull_request:
+    paths:
+      - "breeding_storm_predation2.nlogox"
+      - ".github/workflows/run-model.yml"
+      - ".github/abc/abc_runner.py"
   workflow_dispatch:
 
 jobs:
