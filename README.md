@@ -1,5 +1,7 @@
 # Tara Iti Agent-Based Model
 
+[![Run NetLogo model](https://github.com/UoA-eResearch/tara_iti_ABM/actions/workflows/run-model.yml/badge.svg)](https://github.com/UoA-eResearch/tara_iti_ABM/actions/workflows/run-model.yml)
+
 An agent-based model (ABM) of the tara iti (New Zealand fairy tern, *Sternula nereis davisae*), one of New Zealand's rarest endemic seabirds. The model simulates population dynamics across breeding seasons, incorporating storm disturbance and predation pressure.
 
 ## Overview
