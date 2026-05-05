@@ -2899,7 +2899,7 @@ set-histogram-num-bars 25</setup>
   </linkShapes>
   <previewCommands>setup repeat 75 [ go ]</previewCommands>
   <experiments>
-    <experiment name="default" repetitions="1" sequentialRunOrder="true" runMetricsEveryStep="false" timeLimit="365">
+    <experiment name="default" repetitions="1" sequentialRunOrder="true" runMetricsEveryStep="false" timeLimit="18250">
       <setup>setup</setup>
       <go>go</go>
       <metrics>
@@ -2912,151 +2912,151 @@ set-histogram-num-bars 25</setup>
           <value value="50"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="patch_threshold">
-          <value value="0.2"/>
+          <value value="0.09440558904705035"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="courting_threshold">
-          <value value="10"/>
+          <value value="17.430443583354098"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="court_success">
-          <value value="0.75"/>
+          <value value="0.763079660537497"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="breeding_condition">
-          <value value="0.8"/>
+          <value value="0.5780454288478721"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="mean_clutch_no">
-          <value value="1.68"/>
+          <value value="2.1688814481020775"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="incubation_cond_loss">
-          <value value="0.025"/>
+          <value value="0.03843953594667211"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="abandon_threshold">
-          <value value="0.2"/>
+          <value value="0.20495201715122835"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="hatch_failure">
-          <value value="0.2"/>
+          <value value="0.24699373038353073"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="with_chick_cond_loss">
-          <value value="0.005"/>
+          <value value="0.004253121605794435"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="cooling_off_days">
-          <value value="10"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="winter_adult_mort">
-          <value value="4.0E-4"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="winter_imm_mort">
-          <value value="3.0E-4"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="winter_juv_mort">
-          <value value="5.0E-4"/>
+          <value value="16.297373385967447"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="courting_condition">
-          <value value="0.55"/>
+          <value value="0.3640578783889337"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="candle_success">
-          <value value="0.8"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="winter_elder_mort">
-          <value value="0.001"/>
+          <value value="0.7809420525248914"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="mean_foraging_gain">
-          <value value="0.06"/>
+          <value value="0.06759417143226026"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="sd_foraging_gain">
-          <value value="0.008"/>
+          <value value="0.014098925420375694"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="mean_metabolic_loss">
-          <value value="0.06"/>
+          <value value="0.05955266940203969"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="sd_metabolic_loss">
-          <value value="0.006"/>
+          <value value="0.01508057039457309"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="mean_breeding_prep">
-          <value value="0.085"/>
+          <value value="0.10770730253637653"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="sd_breeding_prep">
-          <value value="0.03"/>
+          <value value="0.04494255249615636"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="chick_health">
-          <value value="0.0025"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="nest_risk_thresh_small">
-          <value value="0.5"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="nest_risk_thresh_large">
-          <value value="0.6"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="nest_risk_thresh_extreme">
-          <value value="0.95"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="nest_loss_extreme">
-          <value value="0.5"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="nest_loss_large">
-          <value value="0.2"/>
-        </enumeratedValueSet>
-        <enumeratedValueSet variable="nest_loss_small">
-          <value value="0.15"/>
+          <value value="0.0015228955261919477"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="juv_cond_loss">
-          <value value="0.11"/>
+          <value value="0.05790135412282188"/>
         </enumeratedValueSet>
-        <enumeratedValueSet variable="extreme_cond_loss">
-          <value value="0.01"/>
+        <enumeratedValueSet variable="winter_adult_mort">
+          <value value="0.0012144569467547543"/>
         </enumeratedValueSet>
-        <enumeratedValueSet variable="large_cond_loss">
-          <value value="0.006"/>
+        <enumeratedValueSet variable="winter_imm_mort">
+          <value value="0.0016748510904664633"/>
         </enumeratedValueSet>
-        <enumeratedValueSet variable="small_cond_loss">
-          <value value="0.003"/>
+        <enumeratedValueSet variable="winter_juv_mort">
+          <value value="0.002588393468205156"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="winter_elder_mort">
+          <value value="0.002367849111332024"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="storm_prob">
-          <value value="0.03"/>
+          <value value="0.030064357596536626"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="nest_risk_thresh_small">
+          <value value="0.6055031310318105"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="nest_risk_thresh_large">
+          <value value="0.7990959794927934"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="nest_risk_thresh_extreme">
+          <value value="0.9152733144132545"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="nest_loss_small">
+          <value value="0.06826520422538404"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="nest_loss_large">
+          <value value="0.4285897600441503"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="nest_loss_extreme">
+          <value value="0.6845562179684195"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="small_cond_loss">
+          <value value="0.00626184657295208"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="large_cond_loss">
+          <value value="0.018109068578692124"/>
+        </enumeratedValueSet>
+        <enumeratedValueSet variable="extreme_cond_loss">
+          <value value="0.029408105051863573"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="avian_predator_prob">
-          <value value="0.016"/>
+          <value value="0.00531090822085658"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="mam_predator_prob">
-          <value value="0.018"/>
+          <value value="0.038507846411796255"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="sibling_attack">
-          <value value="0.75"/>
+          <value value="0.7620243488767254"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="gull_egg_take">
-          <value value="1.0"/>
+          <value value="2.2188916380133"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="kahu_egg_take">
-          <value value="1.5"/>
+          <value value="2.957046481438031"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="shorebird_egg_take">
-          <value value="2.0"/>
+          <value value="0.8583581358790436"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="gull_chick_take">
-          <value value="1.0"/>
+          <value value="2.4861127161627836"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="kahu_chick_take">
-          <value value="1.5"/>
+          <value value="1.8521173110821478"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="shorebird_chick_take">
-          <value value="1.0"/>
+          <value value="0.5574460210774236"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="rat_egg_take">
-          <value value="1.3"/>
+          <value value="1.914735114468749"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="cat_egg_take">
-          <value value="1.5"/>
+          <value value="2.2394442294749117"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="other_egg_take">
-          <value value="2.0"/>
+          <value value="2.819545691196683"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="rat_chick_take">
-          <value value="1.3"/>
+          <value value="2.879670511030553"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="cat_chick_take">
-          <value value="1.5"/>
+          <value value="1.1380469839644145"/>
         </enumeratedValueSet>
         <enumeratedValueSet variable="other_chick_take">
-          <value value="2.0"/>
+          <value value="1.2683865110167096"/>
         </enumeratedValueSet>
       </constants>
     </experiment>
