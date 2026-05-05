@@ -20,12 +20,19 @@ tara_iti_ABM/
 ├── breeding_storm_predation2.nlogox   # Main NetLogo model (breeding + storm + predation)
 ├── TI_breeding.nlogo                  # Earlier prototype breeding-only model
 ├── TI_move_fish.nlogo                 # Prototype movement/foraging model
-└── parameters/
-    ├── model_params.R                 # R script for deriving model parameters from empirical data
-    ├── parameters.Rproj               # RStudio project file
-    └── raw_data/
-        ├── egg_level_data_2000_2025.csv            # Per-nest egg and hatching records
-        └── captures_morphometrics_data_1990_2025.csv  # Individual capture and morphometric records
+├── parameters/
+│   ├── model_params.R                 # R script for deriving model parameters from empirical data
+│   ├── parameters.Rproj               # RStudio project file
+│   └── raw_data/
+│       ├── egg_level_data_2000_2025.csv            # Per-nest egg and hatching records
+│       └── captures_morphometrics_data_1990_2025.csv  # Individual capture and morphometric records
+└── .github/
+    ├── workflows/
+    │   └── run-model.yml              # CI workflow: headless run + ABC calibration
+    ├── experiments/
+    │   └── default.xml                # Reference BehaviorSpace experiment (NetLogo 7 format)
+    └── abc/
+        └── abc_runner.py              # ABC rejection-sampling calibration script
 ```
 
 ## Model Description
@@ -99,6 +106,7 @@ The model starts in mid-April (day 122) in the non-breeding season and advances 
 
 - [NetLogo](https://ccl.northwestern.edu/netlogo/) ≥ 7.0.0 (the model file targets NetLogo 7.x)
 - R ≥ 4.0 with the `tidyverse` package (for `parameters/model_params.R` only)
+- Python ≥ 3.9 (for `abc_runner.py`; uses only the standard library)
 
 ## Running the Model
 
@@ -110,16 +118,91 @@ The model starts in mid-April (day 122) in the non-breeding season and advances 
 
 ### Headlessly (command line)
 
-NetLogo can be run without a GUI using the bundled `netlogo-headless.sh` script and a BehaviorSpace experiment definition:
+NetLogo can be run without a GUI using the bundled `netlogo-headless.sh` script. The `default` BehaviorSpace experiment is embedded directly in the model file (NetLogo 7 reads experiments from the model, not from a separate setup file):
 
 ```bash
-# Create a minimal experiment file (see .github/experiments/default.xml for an example)
-netlogo-headless.sh \
+/path/to/NetLogo-7.0.4-64/netlogo-headless.sh \
   --model breeding_storm_predation2.nlogox \
-  --setup-file .github/experiments/default.xml \
   --experiment default \
   --table results.csv
 ```
+
+`results.csv` will contain one row per tick with columns `total_birds`, `fledged`, and `total_eggs`.
+
+## Continuous Integration
+
+Every push and pull request triggers the `.github/workflows/run-model.yml` workflow, which:
+
+1. **Installs Java 21** (Temurin) and **downloads NetLogo 7.0.4** (cached between runs).
+2. **Runs a 365-tick headless simulation** using the embedded `default` BehaviorSpace experiment and uploads `results.csv` as the `simulation-results` artifact.
+3. **Runs ABC calibration** (see below) and uploads `abc_all.csv` and `abc_accepted.csv` as the `abc-results` artifact.
+
+## ABC Parameter Calibration
+
+`abc_runner.py` uses **ABC rejection sampling** with **Latin Hypercube Sampling (LHS)** to calibrate the model against field-observed breeding outcomes.
+
+### What it does
+
+1. Draws 300 parameter sets from uniform priors using LHS. LHS divides each parameter's range into 300 equal strata and samples one point per stratum, giving much better prior coverage than pure random sampling across 49 parameters.
+2. For each parameter set (run in parallel across all available CPU cores):
+   - Injects a BehaviorSpace experiment into a temporary copy of the model.
+   - Runs NetLogo headlessly for 365 ticks.
+   - Computes a normalised Euclidean distance between the simulated summary statistics and field-observed targets:
+
+     | Summary statistic | Field target | Normalisation SD |
+     |---|---|---|
+     | `fledge_rate` (fledglings ÷ eggs) | 0.307 | 0.15 |
+     | `eggs_per_50` (eggs ÷ initial birds) | 0.458 | 0.20 |
+
+     Both targets are derived from `parameters/raw_data/egg_level_data_2000_2025.csv` (seasons 2000–2025, n = 25).
+
+3. Accepts the top 20% of runs (lowest distance) as the approximate posterior.
+
+### Parameters calibrated
+
+All 49 modifiable sliders are varied (only `initial_number` is fixed at 50):
+
+| Group | Parameters |
+|---|---|
+| Breeding | `patch_threshold`, `courting_threshold`, `court_success`, `breeding_condition`, `mean_clutch_no`, `incubation_cond_loss`, `abandon_threshold`, `hatch_failure`, `with_chick_cond_loss`, `cooling_off_days`, `courting_condition`, `candle_success` |
+| Energetics | `mean_foraging_gain`, `sd_foraging_gain`, `mean_metabolic_loss`, `sd_metabolic_loss`, `mean_breeding_prep`, `sd_breeding_prep`, `chick_health`, `juv_cond_loss` |
+| Mortality | `winter_adult_mort`, `winter_imm_mort`, `winter_juv_mort`, `winter_elder_mort` |
+| Storms | `storm_prob`, `nest_risk_thresh_small/large/extreme`, `nest_loss_small/large/extreme`, `small/large/extreme_cond_loss` |
+| Predation | `avian_predator_prob`, `mam_predator_prob`, `sibling_attack`, `gull/kahu/shorebird_egg_take`, `gull/kahu/shorebird_chick_take`, `rat/cat/other_egg_take`, `rat/cat/other_chick_take` |
+
+### Running ABC manually
+
+```bash
+# Default: 300 LHS samples, 20% acceptance, 4 workers, seed 42
+python3 .github/abc/abc_runner.py
+
+# Custom settings via environment variables
+NETLOGO_SCRIPT=/path/to/netlogo-headless.sh \
+MODEL_FILE=breeding_storm_predation2.nlogox \
+ABC_N_SAMPLES=100 \
+ABC_N_WORKERS=8 \
+ABC_ACCEPT_FRACTION=0.10 \
+ABC_SEED=123 \
+  python3 .github/abc/abc_runner.py
+```
+
+| Variable | Default | Description |
+|---|---|---|
+| `NETLOGO_SCRIPT` | `./NetLogo-7.0.4-64/netlogo-headless.sh` | Path to NetLogo headless launcher |
+| `MODEL_FILE` | `breeding_storm_predation2.nlogox` | Path to model file |
+| `ABC_N_SAMPLES` | `300` | Number of LHS samples to draw |
+| `ABC_N_WORKERS` | CPU count | Parallel worker threads |
+| `ABC_ACCEPT_FRACTION` | `0.20` | Top fraction accepted as posterior |
+| `ABC_SEED` | `42` | Random seed for reproducibility |
+
+### Output files
+
+| File | Contents |
+|---|---|
+| `abc_all.csv` | All successful runs: parameter values, simulated summary stats (`fledge_rate`, `eggs_per_50`, `total_birds`, `fledged`, `total_eggs`), and `distance` |
+| `abc_accepted.csv` | Accepted runs only (top `ACCEPT_FRACTION` by distance) — the approximate posterior |
+
+The posterior parameter ranges printed to stdout identify which combinations of parameters are most consistent with observed breeding outcomes.
 
 ## Data
 

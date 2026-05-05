@@ -53,9 +53,9 @@ jobs:
           path: results.csv
 
       # ── Approximate Bayesian Computation (ABC) calibration ──────────────────
-      # Samples N_SAMPLES parameter sets from uniform priors, runs the model
-      # headlessly for each, and accepts those whose summary statistics
-      # (fledge rate, eggs per bird) are closest to field-observed values.
+      # Draws 300 Latin Hypercube samples over all 49 modifiable parameters,
+      # runs each headlessly in parallel, and accepts the top 20% closest to
+      # field-observed summary statistics (fledge rate, eggs per bird).
       # Outputs: abc_all.csv (all runs) and abc_accepted.csv (top 20%).
       - name: Run ABC calibration
         run: |
@@ -63,7 +63,8 @@ jobs:
         env:
           NETLOGO_SCRIPT: ./NetLogo-7.0.4-64/netlogo-headless.sh
           MODEL_FILE: breeding_storm_predation2.nlogox
-          ABC_N_SAMPLES: "30"
+          ABC_N_SAMPLES: "300"
+          ABC_N_WORKERS: "4"
           ABC_ACCEPT_FRACTION: "0.20"
           ABC_SEED: "42"
 
