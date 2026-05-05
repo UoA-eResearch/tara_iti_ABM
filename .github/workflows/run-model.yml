@@ -51,3 +51,26 @@ jobs:
         with:
           name: simulation-results
           path: results.csv
+
+      # ── Approximate Bayesian Computation (ABC) calibration ──────────────────
+      # Samples N_SAMPLES parameter sets from uniform priors, runs the model
+      # headlessly for each, and accepts those whose summary statistics
+      # (fledge rate, eggs per bird) are closest to field-observed values.
+      # Outputs: abc_all.csv (all runs) and abc_accepted.csv (top 20%).
+      - name: Run ABC calibration
+        run: |
+          python3 .github/abc/abc_runner.py
+        env:
+          NETLOGO_SCRIPT: ./NetLogo-7.0.4-64/netlogo-headless.sh
+          MODEL_FILE: breeding_storm_predation2.nlogox
+          ABC_N_SAMPLES: "30"
+          ABC_ACCEPT_FRACTION: "0.20"
+          ABC_SEED: "42"
+
+      - name: Upload ABC results
+        uses: actions/upload-artifact@v4
+        with:
+          name: abc-results
+          path: |
+            abc_all.csv
+            abc_accepted.csv
