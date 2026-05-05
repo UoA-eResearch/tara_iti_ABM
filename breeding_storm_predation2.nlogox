@@ -2898,4 +2898,164 @@ set-histogram-num-bars 25</setup>
     </shape>
   </linkShapes>
   <previewCommands>setup repeat 75 [ go ]</previewCommands>
+  <experiments>
+    <experiment name="default" repetitions="1" runMetricsEveryStep="false">
+      <setup>setup</setup>
+      <go>go</go>
+      <timeLimit steps="365"/>
+      <metric>total_birds</metric>
+      <metric>fledged</metric>
+      <metric>total_eggs</metric>
+      <enumeratedValueSet variable="initial_number">
+        <value value="50"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="patch_threshold">
+        <value value="0.2"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="courting_threshold">
+        <value value="10"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="court_success">
+        <value value="0.75"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="breeding_condition">
+        <value value="0.8"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="mean_clutch_no">
+        <value value="1.68"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="incubation_cond_loss">
+        <value value="0.025"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="abandon_threshold">
+        <value value="0.2"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="hatch_failure">
+        <value value="0.2"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="with_chick_cond_loss">
+        <value value="0.005"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="cooling_off_days">
+        <value value="10"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="winter_adult_mort">
+        <value value="4.0E-4"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="winter_imm_mort">
+        <value value="3.0E-4"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="winter_juv_mort">
+        <value value="5.0E-4"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="courting_condition">
+        <value value="0.55"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="candle_success">
+        <value value="0.8"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="winter_elder_mort">
+        <value value="0.001"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="mean_foraging_gain">
+        <value value="0.06"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="sd_foraging_gain">
+        <value value="0.008"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="mean_metabolic_loss">
+        <value value="0.06"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="sd_metabolic_loss">
+        <value value="0.006"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="mean_breeding_prep">
+        <value value="0.085"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="sd_breeding_prep">
+        <value value="0.03"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="chick_health">
+        <value value="0.0025"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="nest_risk_thresh_small">
+        <value value="0.5"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="nest_risk_thresh_large">
+        <value value="0.6"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="nest_risk_thresh_extreme">
+        <value value="0.95"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="nest_loss_extreme">
+        <value value="0.5"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="nest_loss_large">
+        <value value="0.2"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="nest_loss_small">
+        <value value="0.15"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="juv_cond_loss">
+        <value value="0.11"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="extreme_cond_loss">
+        <value value="0.01"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="large_cond_loss">
+        <value value="0.006"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="small_cond_loss">
+        <value value="0.003"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="storm_prob">
+        <value value="0.03"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="avian_predator_prob">
+        <value value="0.016"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="mam_predator_prob">
+        <value value="0.018"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="sibling_attack">
+        <value value="0.75"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="gull_egg_take">
+        <value value="1.0"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="kahu_egg_take">
+        <value value="1.5"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="shorebird_egg_take">
+        <value value="2.0"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="gull_chick_take">
+        <value value="1.0"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="kahu_chick_take">
+        <value value="1.5"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="shorebird_chick_take">
+        <value value="1.0"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="rat_egg_take">
+        <value value="1.3"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="cat_egg_take">
+        <value value="1.5"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="other_egg_take">
+        <value value="2.0"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="rat_chick_take">
+        <value value="1.3"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="cat_chick_take">
+        <value value="1.5"/>
+      </enumeratedValueSet>
+      <enumeratedValueSet variable="other_chick_take">
+        <value value="2.0"/>
+      </enumeratedValueSet>
+    </experiment>
+  </experiments>
 </model>
