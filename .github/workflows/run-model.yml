@@ -7,18 +7,20 @@ on:
       - "breeding_storm_predation2.nlogox"
       - ".github/workflows/run-model.yml"
       - ".github/abc/abc_runner.py"
+      - ".github/abc/set_best_params.py"
   pull_request:
     paths:
       - "breeding_storm_predation2.nlogox"
       - ".github/workflows/run-model.yml"
       - ".github/abc/abc_runner.py"
+      - ".github/abc/set_best_params.py"
   workflow_dispatch:
 
 jobs:
   run-model:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -47,19 +49,6 @@ jobs:
           NETLOGO_DIR=$(find . -maxdepth 1 -type d -name "NetLogo*" | head -1)
           mv "$NETLOGO_DIR" NetLogo-7.0.4-64
 
-      - name: Run breeding_storm_predation2.nlogox (headless)
-        run: |
-          ./NetLogo-7.0.4-64/netlogo-headless.sh \
-            --model breeding_storm_predation2.nlogox \
-            --experiment default \
-            --table results.csv
-
-      - name: Upload simulation results
-        uses: actions/upload-artifact@v4
-        with:
-          name: simulation-results
-          path: results.csv
-
       # ── Approximate Bayesian Computation (ABC) calibration ──────────────────
       # Draws 300 Latin Hypercube samples over all 49 modifiable parameters,
       # runs each headlessly in parallel, and accepts the top 20% closest to
@@ -83,3 +72,42 @@ jobs:
           path: |
             abc_all.csv
             abc_accepted.csv
+
+      # ── Apply best ABC parameters to the default experiment ─────────────────
+      # Reads the best-fit parameter set from abc_all.csv, writes best_params.csv,
+      # and updates the <experiments> block in the model file with those values
+      # and a 50-year timeLimit (18250 ticks).
+      - name: Set best ABC parameters in model file
+        run: |
+          python3 .github/abc/set_best_params.py
+        env:
+          MODEL_FILE: breeding_storm_predation2.nlogox
+          ABC_ALL_CSV: abc_all.csv
+
+      # ── Run model for 50 years with calibrated parameters ───────────────────
+      - name: Run calibrated model for 50 years
+        run: |
+          ./NetLogo-7.0.4-64/netlogo-headless.sh \
+            --model breeding_storm_predation2.nlogox \
+            --experiment default \
+            --table results.csv
+
+      - name: Upload simulation results
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulation-results
+          path: |
+            results.csv
+            best_params.csv
+
+      # ── Commit the updated model file back to the repository ─────────────────
+      # Skipped on pull_request events (GITHUB_TOKEN lacks write access to
+      # fork branches).  Uses [skip ci] to prevent an infinite trigger loop.
+      - name: Commit updated model file
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull
+          git commit -am "chore: set ABC best parameters in default experiment [skip ci]"
+          git push
