@@ -1,0 +1,8 @@
+# Generated model output – produced by GHA and abc_runner.py locally
+results.csv
+abc_all.csv
+abc_accepted.csv
+
+# Python bytecode cache
+__pycache__/
+*.pyc

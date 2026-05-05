@@ -1,0 +1,85 @@
+name: Run NetLogo model
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "breeding_storm_predation2.nlogox"
+      - ".github/workflows/run-model.yml"
+      - ".github/abc/abc_runner.py"
+  pull_request:
+    paths:
+      - "breeding_storm_predation2.nlogox"
+      - ".github/workflows/run-model.yml"
+      - ".github/abc/abc_runner.py"
+  workflow_dispatch:
+
+jobs:
+  run-model:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Cache NetLogo installation
+        id: cache-netlogo
+        uses: actions/cache@v4
+        with:
+          path: NetLogo-7.0.4-64
+          key: netlogo-7.0.4-linux-64
+
+      - name: Download and extract NetLogo 7.0.4
+        if: steps.cache-netlogo.outputs.cache-hit != 'true'
+        run: |
+          curl -fsSL -o netlogo.tgz \
+            https://github.com/NetLogo/NetLogo/releases/download/v7.0.4/NetLogo-7.0.4-64.tgz
+          tar -xzf netlogo.tgz
+          rm netlogo.tgz
+          # Rename whatever directory was extracted to a predictable path
+          NETLOGO_DIR=$(find . -maxdepth 1 -type d -name "NetLogo*" | head -1)
+          mv "$NETLOGO_DIR" NetLogo-7.0.4-64
+
+      - name: Run breeding_storm_predation2.nlogox (headless)
+        run: |
+          ./NetLogo-7.0.4-64/netlogo-headless.sh \
+            --model breeding_storm_predation2.nlogox \
+            --experiment default \
+            --table results.csv
+
+      - name: Upload simulation results
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulation-results
+          path: results.csv
+
+      # ── Approximate Bayesian Computation (ABC) calibration ──────────────────
+      # Draws 300 Latin Hypercube samples over all 49 modifiable parameters,
+      # runs each headlessly in parallel, and accepts the top 20% closest to
+      # field-observed summary statistics (fledge rate, eggs per bird).
+      # Outputs: abc_all.csv (all runs) and abc_accepted.csv (top 20%).
+      - name: Run ABC calibration
+        run: |
+          python3 .github/abc/abc_runner.py
+        env:
+          NETLOGO_SCRIPT: ./NetLogo-7.0.4-64/netlogo-headless.sh
+          MODEL_FILE: breeding_storm_predation2.nlogox
+          ABC_N_SAMPLES: "300"
+          ABC_N_WORKERS: "4"
+          ABC_ACCEPT_FRACTION: "0.20"
+          ABC_SEED: "42"
+
+      - name: Upload ABC results
+        uses: actions/upload-artifact@v4
+        with:
+          name: abc-results
+          path: |
+            abc_all.csv
+            abc_accepted.csv
